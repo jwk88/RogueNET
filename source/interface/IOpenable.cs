@@ -1,7 +1,7 @@
-public interface IOpenable : IInterractable
+public interface IOpenable : IInterractable, IOwnable
 {
-    public void SetOwner(Entity entity);
-    public Entity Owner { get; }
     public bool IsOpen { get; }
     public bool IsLocked { get; }
+    public void Unlock();
+    public void Lock();
 }

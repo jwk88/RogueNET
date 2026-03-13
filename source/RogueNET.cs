@@ -32,6 +32,7 @@ public class RogueNET
             entityManager.Player.Move(1, 0);
         }
 
+        entityManager.Player.UseItem(0, 1, 0);
         entityManager.Player.Interract(1, 0);
     }
 }

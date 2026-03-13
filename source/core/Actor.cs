@@ -52,6 +52,17 @@ public class Actor : Entity
         }
     }
 
+    public virtual void UseItem(int index, int xDir, int yDir)
+    {
+        var item = inventory[index];
+        var target = Target(xDir, yDir);
+        if (item is IUsable)
+        {
+            var usable = item as IUsable;
+            usable.Use(this, target.Owner);
+        }
+    }
+
     public virtual void AddToInventory(Entity entity)
     {
         inventory.Add(entity);

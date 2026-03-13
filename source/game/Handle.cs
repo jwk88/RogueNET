@@ -1,8 +1,8 @@
-public class Handle : IOpenable
+public class Handle : Entity, IOpenable
 {
     bool open;
     bool locked;
-    Key key;
+    IOwnable key;
     Entity owner;
 
     public bool IsOpen => open;
@@ -28,23 +28,29 @@ public class Handle : IOpenable
 
         if (locked)
         {
-            if (!actor.HasItem(key))
-            {
-                Log.Info($"{Owner} is locked, {actor} did not have the key.");
-                return;    
-            }
-
-            locked = false;
+            Log.Info($"{Owner} is locked");
+            return;
         }
 
         Log.Info($"{Owner} is now open");
         open = true;
     }
 
-    public void LockWithKey(Key key)
+    public void Lock()
+    {
+        locked = true;
+    }
+
+    public void Unlock()
+    {
+        locked = false;
+    }
+
+    public void LockWithKey(IOwnable key)
     {
         this.key = key;
         locked = true;
+        key.SetOwner(this);
     }
 
     public void SetOwner(Entity entity)
