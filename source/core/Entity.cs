@@ -3,6 +3,8 @@ public abstract class Entity : EntityBase
     protected Grid grid;
     protected Node node;
 
+    bool setToGrid;
+
     public virtual void SetGrid(Grid grid)
     {
         this.grid = grid;
@@ -29,7 +31,14 @@ public abstract class Entity : EntityBase
 
         node = next;
         node.Owner = this;
-        Log.Info($"{this} moved to {node}");
+
+        if (setToGrid)
+        {
+            Log.Info($"{this} moved to {node}");    
+        }
+        
+        setToGrid = true;
+        
         return true;
     }
 
