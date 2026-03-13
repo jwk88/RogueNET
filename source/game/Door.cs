@@ -1,31 +1,20 @@
 public class Door : Entity, IInterractable
 {
-    protected Handle handle;
+    protected IOpenable openable;
 
-    public virtual void SetHandle(Handle handle)
+    public void Inject(IInterractable interractable)
     {
-        this.handle = handle;
+        openable = (IOpenable)interractable;
+        openable.SetOwner(this);
     }
 
     public void Interract(Actor actor)
     {
-        Log.Info($"{actor} interracts with {this}");
-        handle.Interract(actor);
-        
-        if (handle.IsOpen)
+        if (openable == null)
         {
-            Log.Info($"{this} is now open");    
+            Log.Warn($"{this} has no interaction set - if this is by design, you can ignore this warning");
+            return;
         }
-        else
-        {
-            if (handle.IsLocked)
-            {
-                Log.Info($"{this} is locked, {actor} did not have the key.");
-            }
-            else
-            {
-                Log.Info($"{this} is now closed");    
-            }
-        }
+        openable.Interract(actor);
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 public class Container : Door
 {
@@ -18,7 +17,7 @@ public class Container : Door
     public void PickupContents(Actor actor)
     {
         Log.Info($"{actor} tries to loot {this}");
-        if (handle.IsOpen)
+        if (openable.IsOpen)
         {
             if (contents.Count == 0)
             {

@@ -38,12 +38,12 @@ public class EntityManager
             if (pair.Key == typeof(Door))
             {
                 var door = pair.Value as Door;
-                door.SetHandle(handle1);
+                door.Inject(handle1);
             }
             if (pair.Key == typeof(Container))
             {
                 var chest = pair.Value as Container;
-                chest.SetHandle(handle2);
+                chest.Inject(handle2);
                 chest.SetContents(key);
             }
         }
