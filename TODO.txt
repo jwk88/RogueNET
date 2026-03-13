@@ -2,4 +2,10 @@ Version 0.1
 - Some basic entity generation and interactions between them have been implemented
 - Next steps would be to:
     - 1.
-    - The entites are right now just generated into fixed positions, when above is done, start on procedural generation of rooms, paths etc
+    - The entites are right now just generated into fixed positions, start on procedural generation of rooms, paths etc
+    -
+    - 2.
+    - A fun mechanic would be to be able destroy any entities that are small enough to destroy
+    - For example, the openable objects have handles that can be locked
+    - The player could destroy the handle, and if the door was already locked, it would become unopenable
+    - (And block enemies from entering room)
