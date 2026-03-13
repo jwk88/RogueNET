@@ -1,7 +1,7 @@
-public class Key : Entity, IPickup
+public class Key : Entity, IPickupable
 {
-    public void Pickup(Actor actor)
+    public void PickedUpBy(Actor actor)
     {
-        actor.Pickup(this);
+        actor.AddToInventory(this);
     }
 }

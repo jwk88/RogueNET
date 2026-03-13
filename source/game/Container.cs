@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class Container : Door
+public class Container : Door, ILootable
 {
     List<Entity> contents;
 
@@ -14,7 +14,7 @@ public class Container : Door
         this.contents.AddRange(contents);
     }
 
-    public void PickupContents(Actor actor)
+    public void LootFor(Actor actor)
     {
         Log.Info($"{actor} tries to loot {this}");
         if (openable.IsOpen)
@@ -27,7 +27,11 @@ public class Container : Door
 
             foreach (var content in contents)
             {
-                actor.Pickup(content);
+                if (content is IPickupable)
+                {
+                    var pickup = content as IPickupable;
+                    pickup.PickedUpBy(actor);
+                }
             }
 
             contents.Clear();

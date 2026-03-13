@@ -8,13 +8,13 @@ public class Door : Entity, IInterractable
         openable.SetOwner(this);
     }
 
-    public void Interract(Actor actor)
+    public void InteractedBy(Actor actor)
     {
         if (openable == null)
         {
             Log.Warn($"{this} has no interaction set - if this is by design, you can ignore this warning");
             return;
         }
-        openable.Interract(actor);
+        openable.InteractedBy(actor);
     }
 }

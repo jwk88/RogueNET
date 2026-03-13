@@ -29,7 +29,7 @@ public class Actor : Entity
             if (target.Owner is IInterractable)
             {
                 var openable = target.Owner as IInterractable;
-                openable.Interract(this);
+                openable.InteractedBy(this);
             }
             return target.Owner;
         }
@@ -45,14 +45,14 @@ public class Actor : Entity
             return;
         }
         var entity = node.Owner;
-        if (entity != null && entity is Container)
+        if (entity != null && entity is ILootable)
         {
-            var container = entity as Container;
-            container.PickupContents(this);
+            var container = entity as ILootable;
+            container.LootFor(this);
         }
     }
 
-    public virtual void Pickup(Entity entity)
+    public virtual void AddToInventory(Entity entity)
     {
         inventory.Add(entity);
         Log.Info($"{this} placed {entity} in their inventory");

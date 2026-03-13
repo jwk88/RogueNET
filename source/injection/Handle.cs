@@ -15,7 +15,7 @@ public class Handle : IOpenable
         throw new System.NotImplementedException();
     }
 
-    public void Interract(Actor actor)
+    public void InteractedBy(Actor actor)
     {
         Log.Info($"{actor} interracts with {Owner}");
 
