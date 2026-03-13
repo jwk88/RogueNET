@@ -47,7 +47,7 @@ public abstract class Entity : EntityBase
         }
         else
         {
-            return $"{base.ToString()}";
+            return base.ToString() + " {-,-}";
         }
     }
 }

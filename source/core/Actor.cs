@@ -2,18 +2,11 @@ using System.Collections.Generic;
 
 public class Actor : Entity
 {
-    public string Name { get => name; private set => name = value; }
-    string name;
     List<Entity> inventory;
 
     public Actor()
     {
         inventory = new List<Entity>();
-    }
-
-    public void SetName(string name)
-    {
-        this.name = name;
     }
 
     Node Target(int xDir, int yDir)
@@ -72,10 +65,5 @@ public class Actor : Entity
     public virtual bool HasItem(Entity entity)
     {
         return inventory.Contains(entity);
-    }
-
-    public override string ToString()
-    {
-        return $"{base.ToString()} ({Name})";
     }
 }

@@ -28,9 +28,14 @@ public class EntityManager
         builders.ForEach(x => x.Build((entity, type) => entities.Add(type, entity)));
 
         var key = new Key();
+        key.SetName("Silver Key");
+
         var handle1 = new Handle();
+        handle1.SetName("Steel Door Handle");
+
         var handle2 = new Handle();
         handle1.LockWithKey(key);
+        handle2.SetName("Chest Lid");
 
         foreach (var pair in entities)
         {
@@ -39,12 +44,18 @@ public class EntityManager
             {
                 var door = pair.Value as Door;
                 door.Inject(handle1);
+                door.SetName("Steel Door");
             }
             if (pair.Key == typeof(Container))
             {
                 var chest = pair.Value as Container;
                 chest.Inject(handle2);
                 chest.SetContents(key);
+                chest.SetName("Wooden Chest");
+            }
+            if (pair.Key == typeof(Player))
+            {
+                pair.Value.SetName("John Doe");
             }
         }
     }

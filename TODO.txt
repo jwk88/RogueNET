@@ -1,14 +1,5 @@
 Version 0.1
 - Some basic entity generation and interactions between them have been implemented
 - Next steps would be to:
-    - 1. 
-    - Right now, any locked door or container handle will open right away if the actor has the key
-    - Implement a Use action so the actor has to try different keys into the handle locks
-    - 
-    - 2.
-    - Although Actors do have a name field implemented, there's no elegant way right now to give them rather than just hardcoding interactions
-    - Make a Character Generation class where user chooses name (and later RPG stuff) for Player
-    - Names for other Actors such as Monsters and NPCs might be better to have use their Type instead, will see
-    -
-    - 3.
+    - 1.
     - The entites are right now just generated into fixed positions, when above is done, start on procedural generation of rooms, paths etc
