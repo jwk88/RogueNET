@@ -21,18 +21,21 @@ public class EntityManager
         new RoomBuilder(layers, layers[0].Origin, seed: 1);
 
         player  = new Builder<Player>(layers[1], layers[1].Origin).Build();
-        var door    = new Builder<Door>(layers[1], layers[1].RightOf(layers[1].Origin, 5)).Build();
-        var chest   = new Builder<Container>(layers[1], layers[1].LeftOf(layers[1].Origin, -4)).Build();
+        var door    = new Builder<Door>(layers[1], layers[1].RightOf(layers[1].Origin, 4)).Build();
+        var chest   = new Builder<Container>(layers[1], layers[1].LeftOf(layers[1].Origin, -3)).Build();
 
         var key = new Key();
-        key.SetName("Key");
+        key.SetName("Silver Key");
 
         var handle1 = new Handle();
-        handle1.SetName("Door Handle");
+        handle1.SetName("Steel Door Handle");
 
         var handle2 = new Handle();
         handle1.LockWithKey(key);
         handle2.SetName("Chest Lid");
+
+        door.SetName("Steel Door");
+        chest.SetName("Wooden Chest");
 
         door.Inject(handle1);
         chest.Inject(handle2);
@@ -41,6 +44,9 @@ public class EntityManager
 
     public void Draw()
     {
+        Console.WriteLine();
+        Console.WriteLine("-----------------------------------------");
+
         while (Log.logs.Count > 0)
         {
             Console.WriteLine(Log.logs.Dequeue());

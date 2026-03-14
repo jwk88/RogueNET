@@ -20,15 +20,6 @@ rather than rigid scripting.**
 ------------------------------------------------------------------------
 
 # Example Scenario
-
-Initial world layout:
-
-    ***********
-    *.........*
-    *C...@....D
-    *.........*
-    ***********
-
 Legend
 
   Symbol   Meaning
@@ -49,81 +40,119 @@ on the right side.
 The following code drives the interaction sequence.
 
 ``` csharp
-        // place the entitis:
-        entityManager.Setup();
-        entityManager.Draw();
+// Place the entitis:
+entityManager.Setup();
+entityManager.Draw();
         
-        // move player to the right four times
-        entityManager.Player.Move(4, 0);
+// Player steps to the right seven times, collides with 'Door'
+entityManager.Player.StepRight(7);
 
-        // stands now left of the door, interracts to the right, but the door is locked
-        entityManager.Player.Interract(1, 0);
-        entityManager.Draw();
+// Stands now left of the door, interracts to the right, but the door is locked
+entityManager.Player.Interract(1, 0);
+entityManager.Draw();
 
-        // player moves to the left seven times, collides with the chest
-        entityManager.Player.Move(-7, 0);
+// Player steps to the left seven times, collides with 'Chest'
+entityManager.Player.StepLeft(7);
 
-        // player tries to loot to the left, but the chest is closed
-        entityManager.Player.Loot(-1, 0);
+// Player tries to loot to the left, but the chest is closed
+entityManager.Player.Loot(-1, 0);
 
-        // player interracts to the left, opening the chest
-        entityManager.Player.Interract(-1, 0);
+// Player interracts to the left, opening the chest
+entityManager.Player.Interract(-1, 0);
 
-        // player tries to loot again to the left, and as chest is now open, gets the contents
-        entityManager.Player.Loot(-1, 0);
-        entityManager.Draw();
+// Player tries to loot again to the left, and as chest is now open, gets the contents
+entityManager.Player.Loot(-1, 0);
+entityManager.Draw();
 
-        // player moves seven times to the right, colliding with the door
-        entityManager.Player.Move(7, 0);
+// Player steps seven times to the right, colliding with the door
+entityManager.Player.StepRight(7);
 
-        // player uses first item in inventory, to the right
-        // a key -> lock check is made, unlocking the handle on the door
-        entityManager.Player.UseItem(0, 1, 0);
+// player uses first item in inventory, to the right
+// a key -> lock check is made, unlocking the handle on the door
+entityManager.Player.UseItem(index: 0, 1, 0);
 
-        // player interracts to the right, opening the door (not locked anymore)
-        entityManager.Player.Interract(1, 0);
-        entityManager.Draw();
+// player interracts to the right, opening the door (not locked anymore)
+entityManager.Player.Interract(1, 0);
+entityManager.Draw();
 ```
 
 ------------------------------------------------------------------------
 
 # Runtime Output
 
-    [Info] 'John Doe' is moving from {64:91} to {65:91}
-    [Info] 'John Doe' is moving from {65:91} to {66:91}
-    [Info] 'John Doe' is moving from {66:91} to {67:91}
-    [Info] 'John Doe' is moving from {67:91} to {68:91}
-    [Info] 'John Doe' {68:91} interracts with 'Steel Door' {69:91}
-    [Info] 'Steel Door' {69:91} is locked
-    [Info] 'John Doe' is moving from {68:91} to {67:91}
-    [Info] 'John Doe' is moving from {67:91} to {66:91}
-    [Info] 'John Doe' is moving from {66:91} to {65:91}
-    [Info] 'John Doe' is moving from {65:91} to {64:91}
-    [Info] 'John Doe' is moving from {64:91} to {63:91}
-    [Info] 'John Doe' is moving from {63:91} to {62:91}
-    [Info] 'John Doe' is moving from {62:91} to {61:91}
-    [Info] 'John Doe' is moving from {61:91} to {60:91}
-    [Info] 'John Doe' {60:91} path was blocked by 'Wooden Chest' {59:91}
-    [Info] 'John Doe' {60:91} tries to loot 'Wooden Chest' {59:91}
-    [Info] 'Wooden Chest' {59:91} is closed!
-    [Info] 'John Doe' {60:91} interracts with 'Wooden Chest' {59:91}
-    [Info] 'Wooden Chest' {59:91} is now open
-    [Info] 'John Doe' {60:91} tries to loot 'Wooden Chest' {59:91}
-    [Info] 'John Doe' {60:91} placed 'Silver Key' {-,-} in their inventory
-    [Info] 'John Doe' is moving from {60:91} to {61:91}
-    [Info] 'John Doe' is moving from {61:91} to {62:91}
-    [Info] 'John Doe' is moving from {62:91} to {63:91}
-    [Info] 'John Doe' is moving from {63:91} to {64:91}
-    [Info] 'John Doe' is moving from {64:91} to {65:91}
-    [Info] 'John Doe' is moving from {65:91} to {66:91}
-    [Info] 'John Doe' is moving from {66:91} to {67:91}
-    [Info] 'John Doe' is moving from {67:91} to {68:91}
-    [Info] 'John Doe' {68:91} path was blocked by 'Steel Door' {69:91}
-    [Info] 'John Doe' {68:91} uses 'Silver Key' {-,-} on 'Steel Door' {69:91}
-    [Info] 'Steel Door' {69:91} was owned by 'Steel Door Handle' {-,-}
-    [Info] 'John Doe' {68:91} used 'Silver Key' {-,-} to open 'Steel Door Handle' {-,-} on 'Steel Door' {69:91}
-    [Info] 'John Doe' {68:91} interracts with 'Steel Door' {69:91}
-    [Info] 'Steel Door' {69:91} is now open
+```
+-----------------------------------------
+[Info] 'John Doe' has been spawned at {5:4}
+[Info] 'Door' has been spawned at {9:4}
+[Info] 'Container' has been spawned at {2:4}
+ 
+*-------*
+|.......|
+|.......|
+|C..@...D
+|.......|
+|.......|
+*-------*
+
+-----------------------------------------
+[Info] 'John Doe' is moving from {5:4} to {6:4}
+[Info] 'John Doe' is moving from {6:4} to {7:4}
+[Info] 'John Doe' is moving from {7:4} to {8:4}
+[Info] 'John Doe' {8:4} path was blocked by 'Steel Door' {9:4}
+[Info] 'John Doe' {8:4} interracts with 'Steel Door' {9:4}
+[Info] 'Steel Door' {9:4} is locked
+ 
+*-------*
+|.......|
+|.......|
+|C.....@D
+|.......|
+|.......|
+*-------*
+
+-----------------------------------------
+[Info] 'John Doe' is moving from {8:4} to {7:4}
+[Info] 'John Doe' is moving from {7:4} to {6:4}
+[Info] 'John Doe' is moving from {6:4} to {5:4}
+[Info] 'John Doe' is moving from {5:4} to {4:4}
+[Info] 'John Doe' is moving from {4:4} to {3:4}
+[Info] 'John Doe' {3:4} path was blocked by 'Wooden Chest' {2:4}
+[Info] 'John Doe' {3:4} tries to loot 'Wooden Chest' {2:4}
+[Info] 'Wooden Chest' {2:4} is closed!
+[Info] 'John Doe' {3:4} interracts with 'Wooden Chest' {2:4}
+[Info] 'Wooden Chest' {2:4} is now open
+[Info] 'John Doe' {3:4} tries to loot 'Wooden Chest' {2:4}
+[Info] 'John Doe' {3:4} placed 'Silver Key' {-,-} in their inventory
+ 
+*-------*
+|.......|
+|.......|
+|C@.....D
+|.......|
+|.......|
+*-------*
+
+-----------------------------------------
+[Info] 'John Doe' is moving from {3:4} to {4:4}
+[Info] 'John Doe' is moving from {4:4} to {5:4}
+[Info] 'John Doe' is moving from {5:4} to {6:4}
+[Info] 'John Doe' is moving from {6:4} to {7:4}
+[Info] 'John Doe' is moving from {7:4} to {8:4}
+[Info] 'John Doe' {8:4} path was blocked by 'Steel Door' {9:4}
+[Info] 'John Doe' {8:4} uses 'Silver Key' {-,-} on 'Steel Door' {9:4}
+[Info] 'Steel Door' {9:4} was owned by 'Steel Door Handle' {-,-}
+[Info] 'John Doe' {8:4} used 'Silver Key' {-,-} to open 'Steel Door Handle' {-,-} on 'Steel Door' {9:4}
+[Info] 'John Doe' {8:4} interracts with 'Steel Door' {9:4}
+[Info] 'Steel Door' {9:4} is now open
+ 
+*-------*
+|.......|
+|.......|
+|C.....@D
+|.......|
+|.......|
+*-------*
+```
 
 ------------------------------------------------------------------------
 

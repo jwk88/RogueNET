@@ -11,7 +11,28 @@ public abstract class Entity : EntityBase
         this.grid = grid;
     }
 
-    public virtual void Move(int xDir, int yDir) => SetPosition(point.X + xDir, point.Y + yDir);
+    public void StepRight(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (!SetPosition(point.X + 1, point.Y))
+            {
+                break;
+            }
+        }
+    }
+
+    public void StepLeft(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (!SetPosition(point.X - 1, point.Y))
+            {
+                break;
+            }
+        }
+    }
+
     public virtual bool SetPosition(int x, int y) => SetPosition(new Point(x, y));
     public virtual bool SetPosition(Point point)
     {
@@ -41,6 +62,13 @@ public abstract class Entity : EntityBase
 
         this.point = point;
         Node.SetOwner(this);
+        if (!isPlaced)
+        {
+            if (!string.IsNullOrEmpty(Name))
+            {
+                Log.Info($"'{Name}' has been spawned at {this.point}");    
+            }
+        }
         
         isPlaced = true;
         
