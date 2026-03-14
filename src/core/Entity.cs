@@ -4,7 +4,7 @@ public abstract class Entity : EntityBase
     protected Point point;
 
     public Node node => grid[point];
-    bool setToGrid;
+    bool isPlaced;
 
     public virtual void SetGrid(Grid grid)
     {
@@ -34,28 +34,28 @@ public abstract class Entity : EntityBase
             node.SetOwner(null);
         }
 
+        if (isPlaced)
+        {
+            Log.Info($"'{Name}' is moving from {this.point} to {point}");    
+        }
+
         this.point = point;
         node.SetOwner(this);
-
-        if (setToGrid)
-        {
-            Log.Info($"{this} moved to {point}");    
-        }
         
-        setToGrid = true;
+        isPlaced = true;
         
         return true;
     }
 
     public override string ToString()
     {
-        if (point.Valid)
+        if (!isPlaced)
         {
-            return $"{base.ToString()} {point}";    
+            return base.ToString() + " {-,-}";
         }
         else
         {
-            return base.ToString() + " {-,-}";
+            return $"{base.ToString()} {point}";
         }
     }
 }

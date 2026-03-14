@@ -4,13 +4,11 @@ public struct Point : IEquatable<Point>
 {
     public int X;
     public int Y;
-    public bool Valid;
 
     public Point(int x, int y)
     {
         X = x;
         Y = y;
-        Valid = true;
     }
 
     public bool Equals(Point other)

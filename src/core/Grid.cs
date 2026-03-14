@@ -53,12 +53,12 @@ public class Grid : IEnumerable<Node>
 
     public Point RightOf(Point point, int offsetX = 1)
     {
-        return cells[point.X + offsetX, point.Y].Point;
+        return new Point(point.X + offsetX, point.Y);
     }
 
     public Point LeftOf(Point point, int offsetX = -1)
     {
-        return cells[point.X + offsetX, point.Y].Point;
+        return new Point(point.X + offsetX, point.Y);
     }
 
     public IEnumerator<Node> GetEnumerator()
