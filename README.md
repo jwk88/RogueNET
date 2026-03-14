@@ -100,41 +100,41 @@ entityManager.Player.Interract(1, 0);
 
 # Runtime Output
 
-[Info] 'John Doe' is moving from {64:91} to {65:91}
-[Info] 'John Doe' is moving from {65:91} to {66:91}
-[Info] 'John Doe' is moving from {66:91} to {67:91}
-[Info] 'John Doe' is moving from {67:91} to {68:91}
-[Info] 'John Doe' {68:91} interracts with 'Steel Door' {69:91}
-[Info] 'Steel Door' {69:91} is locked
-[Info] 'John Doe' is moving from {68:91} to {67:91}
-[Info] 'John Doe' is moving from {67:91} to {66:91}
-[Info] 'John Doe' is moving from {66:91} to {65:91}
-[Info] 'John Doe' is moving from {65:91} to {64:91}
-[Info] 'John Doe' is moving from {64:91} to {63:91}
-[Info] 'John Doe' is moving from {63:91} to {62:91}
-[Info] 'John Doe' is moving from {62:91} to {61:91}
-[Info] 'John Doe' is moving from {61:91} to {60:91}
-[Info] 'John Doe' {60:91} path was blocked by 'Wooden Chest' {59:91}
-[Info] 'John Doe' {60:91} tries to loot 'Wooden Chest' {59:91}
-[Info] 'Wooden Chest' {59:91} is closed!
-[Info] 'John Doe' {60:91} interracts with 'Wooden Chest' {59:91}
-[Info] 'Wooden Chest' {59:91} is now open
-[Info] 'John Doe' {60:91} tries to loot 'Wooden Chest' {59:91}
-[Info] 'John Doe' {60:91} placed 'Silver Key' {-,-} in their inventory
-[Info] 'John Doe' is moving from {60:91} to {61:91}
-[Info] 'John Doe' is moving from {61:91} to {62:91}
-[Info] 'John Doe' is moving from {62:91} to {63:91}
-[Info] 'John Doe' is moving from {63:91} to {64:91}
-[Info] 'John Doe' is moving from {64:91} to {65:91}
-[Info] 'John Doe' is moving from {65:91} to {66:91}
-[Info] 'John Doe' is moving from {66:91} to {67:91}
-[Info] 'John Doe' is moving from {67:91} to {68:91}
-[Info] 'John Doe' {68:91} path was blocked by 'Steel Door' {69:91}
-[Info] 'John Doe' {68:91} uses 'Silver Key' {-,-} on 'Steel Door' {69:91}
-[Info] 'Steel Door' {69:91} was owned by 'Steel Door Handle' {-,-}
-[Info] 'John Doe' {68:91} used 'Silver Key' {-,-} to open 'Steel Door Handle' {-,-} on 'Steel Door' {69:91}
-[Info] 'John Doe' {68:91} interracts with 'Steel Door' {69:91}
-[Info] 'Steel Door' {69:91} is now open
+    [Info] 'John Doe' is moving from {64:91} to {65:91}
+    [Info] 'John Doe' is moving from {65:91} to {66:91}
+    [Info] 'John Doe' is moving from {66:91} to {67:91}
+    [Info] 'John Doe' is moving from {67:91} to {68:91}
+    [Info] 'John Doe' {68:91} interracts with 'Steel Door' {69:91}
+    [Info] 'Steel Door' {69:91} is locked
+    [Info] 'John Doe' is moving from {68:91} to {67:91}
+    [Info] 'John Doe' is moving from {67:91} to {66:91}
+    [Info] 'John Doe' is moving from {66:91} to {65:91}
+    [Info] 'John Doe' is moving from {65:91} to {64:91}
+    [Info] 'John Doe' is moving from {64:91} to {63:91}
+    [Info] 'John Doe' is moving from {63:91} to {62:91}
+    [Info] 'John Doe' is moving from {62:91} to {61:91}
+    [Info] 'John Doe' is moving from {61:91} to {60:91}
+    [Info] 'John Doe' {60:91} path was blocked by 'Wooden Chest' {59:91}
+    [Info] 'John Doe' {60:91} tries to loot 'Wooden Chest' {59:91}
+    [Info] 'Wooden Chest' {59:91} is closed!
+    [Info] 'John Doe' {60:91} interracts with 'Wooden Chest' {59:91}
+    [Info] 'Wooden Chest' {59:91} is now open
+    [Info] 'John Doe' {60:91} tries to loot 'Wooden Chest' {59:91}
+    [Info] 'John Doe' {60:91} placed 'Silver Key' {-,-} in their inventory
+    [Info] 'John Doe' is moving from {60:91} to {61:91}
+    [Info] 'John Doe' is moving from {61:91} to {62:91}
+    [Info] 'John Doe' is moving from {62:91} to {63:91}
+    [Info] 'John Doe' is moving from {63:91} to {64:91}
+    [Info] 'John Doe' is moving from {64:91} to {65:91}
+    [Info] 'John Doe' is moving from {65:91} to {66:91}
+    [Info] 'John Doe' is moving from {66:91} to {67:91}
+    [Info] 'John Doe' is moving from {67:91} to {68:91}
+    [Info] 'John Doe' {68:91} path was blocked by 'Steel Door' {69:91}
+    [Info] 'John Doe' {68:91} uses 'Silver Key' {-,-} on 'Steel Door' {69:91}
+    [Info] 'Steel Door' {69:91} was owned by 'Steel Door Handle' {-,-}
+    [Info] 'John Doe' {68:91} used 'Silver Key' {-,-} to open 'Steel Door Handle' {-,-} on 'Steel Door' {69:91}
+    [Info] 'John Doe' {68:91} interracts with 'Steel Door' {69:91}
+    [Info] 'Steel Door' {69:91} is now open
 
 ------------------------------------------------------------------------
 
