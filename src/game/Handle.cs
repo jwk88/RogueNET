@@ -2,7 +2,6 @@ public class Handle : Entity, IOpenable
 {
     bool open;
     bool locked;
-    IOwnable key;
     Entity owner;
 
     public bool IsOpen => open;
@@ -48,7 +47,6 @@ public class Handle : Entity, IOpenable
 
     public void LockWithKey(IOwnable key)
     {
-        this.key = key;
         locked = true;
         key.SetOwner(this);
     }

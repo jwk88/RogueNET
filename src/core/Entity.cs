@@ -33,18 +33,12 @@ public abstract class Entity : EntityBase
         }
     }
 
-    public virtual bool SetPosition(int x, int y) => SetPosition(new Point(x, y));
-    public virtual bool SetPosition(Point point)
+    public virtual bool SetPosition(int x, int y, bool overwrite = false) => SetPosition(new Point(x, y), overwrite);
+    public virtual bool SetPosition(Point point, bool overwrite = false)
     {
         var next = grid[point];
 
-        if (next == null)
-        {
-            Log.Info($"{this} path was blocked, edge of the world");
-            return false;
-        }
-
-        if (next.Occupied)
+        if (next.Occupied && !overwrite)
         {
             Log.Info($"{this} path was blocked by {next.Owner}");
             return false;
@@ -62,13 +56,6 @@ public abstract class Entity : EntityBase
 
         this.point = point;
         Node.SetOwner(this);
-        if (!isPlaced)
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
-                Log.Info($"'{Name}' has been spawned at {this.point}");    
-            }
-        }
         
         isPlaced = true;
         

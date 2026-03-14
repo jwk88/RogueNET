@@ -3,18 +3,14 @@ using System.Collections.Generic;
 public class Actor : Entity
 {
     List<Entity> inventory;
+    Node Target(int xDir, int yDir) => grid[point + new Point(xDir, yDir)];
 
     public Actor()
     {
         inventory = new List<Entity>();
     }
 
-    Node Target(int xDir, int yDir)
-    {
-        return grid[point.X + xDir, point.Y + yDir];
-    }
-
-    public virtual Entity Interract(int xDir, int yDir)
+    public virtual void Interract(int xDir, int yDir)
     {
         var target = Target(xDir, yDir);
         if (target.Owner != null)
@@ -24,9 +20,15 @@ public class Actor : Entity
                 var openable = target.Owner as IInterractable;
                 openable.InteractedBy(this);
             }
-            return target.Owner;
+            else
+            {
+                Log.Info($"{this} tried to interract with {target.Owner}. Nothing happened.");
+            }
         }
-        return null;
+        else
+        {
+            Log.Info($"{this} tried to interract with something, but there's nothing there!");
+        }
     }
 
     public virtual void Loot(int xDir, int yDir)
@@ -47,6 +49,12 @@ public class Actor : Entity
 
     public virtual void UseItem(int index, int xDir, int yDir)
     {
+        if (inventory.Count == 0)
+        {
+            Log.Info($"{this} searched his inventory for item {index}, but inventory is empty!");
+            return;
+        }
+
         var item = inventory[index];
         var target = Target(xDir, yDir);
         if (target.Owner == null)
@@ -65,10 +73,5 @@ public class Actor : Entity
     {
         inventory.Add(entity);
         Log.Info($"{this} placed {entity} in their inventory");
-    }
-
-    public virtual bool HasItem(Entity entity)
-    {
-        return inventory.Contains(entity);
     }
 }

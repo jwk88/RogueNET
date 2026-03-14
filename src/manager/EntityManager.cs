@@ -1,28 +1,31 @@
 using System;
-using System.Collections.Generic;
 
 public class EntityManager
 {
-    Layers layers;
-    Player player;
-    public Player Player => player;
+    static World world;
+    public Player Player { get; private set; }
 
-    int frameCount;
-    int frameOffset;
+    public static Grid Ground => world[0];
+    public static Grid Floor => world[1];
+    public static Grid Roof => world[Config.worldHeight - 1];
 
     public EntityManager()
     {
-        layers = new Layers(Config.width, Config.depth, Config.layerHeight);
+        world = new World(Config.width, Config.depth, Config.worldHeight);
     }
 
-    // TODO: Clean this, really unreadable
-    public void Setup()
+    public void Setup(int seed)
     {
-        new RoomBuilder(layers, layers[0].Origin, seed: 1);
+        new RoomBuilder(world, Floor.Origin, new Random(seed));
 
-        player  = new Builder<Player>(layers[1], layers[1].Origin).Build();
-        var door    = new Builder<Door>(layers[1], layers[1].RightOf(layers[1].Origin, 4)).Build();
-        var chest   = new Builder<Container>(layers[1], layers[1].LeftOf(layers[1].Origin, -3)).Build();
+        var spawn = Floor.Origin;
+        var playerBuild = new EntityBuilder<Player>(Floor, spawn);
+        var doorBuild   = new EntityBuilder<Door>(Floor, spawn + (Point.Right * 4));
+        var chestBuild  = new EntityBuilder<Container>(Floor, spawn + (Point.Left * 3));
+
+        var player = playerBuild.Build();
+        var door = doorBuild.Build(overwrite: true);
+        var chest = chestBuild.Build();
 
         var key = new Key();
         key.SetName("Silver Key");
@@ -40,6 +43,8 @@ public class EntityManager
         door.Inject(handle1);
         chest.Inject(handle2);
         chest.SetContents(key);
+
+        Player = player;
     }
 
     public void Draw()
@@ -50,11 +55,10 @@ public class EntityManager
         while (Log.logs.Count > 0)
         {
             Console.WriteLine(Log.logs.Dequeue());
-            frameOffset++;
         }
 
-        int depth = layers[0].Depth;
-        int width = layers[0].Width;
+        int depth = Ground.Depth;
+        int width = Ground.Width;
 
         for (int y = 0; y < depth; y++)
         {
@@ -63,9 +67,9 @@ public class EntityManager
             for (int x = 0; x < width; x++)
             {
                 char symbol = ' ';
-                for (int i = 0; i < layers.Height; i++)
+                for (int i = 0; i < world.Height - 1; i++)
                 {
-                    var owner = layers[i][x, y].Owner;
+                    var owner = world[i][x, y].Owner;
                     if (owner != null)
                     {
                         symbol = owner.Symbol;
@@ -78,8 +82,6 @@ public class EntityManager
             Console.WriteLine(line);
         }
 
-        frameCount++;
-        frameOffset = 0;
         Console.ReadKey();
     }
 }

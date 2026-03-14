@@ -1,70 +1,72 @@
 using System;
-using System.Collections.Generic;
 
 public class RoomBuilder
 {
-    Layers layers;
+    World world;
     Random rng;
-    Dictionary<Point, Entity> entities = new Dictionary<Point, Entity>();
+    int width;
+    int depth;
 
-    public RoomBuilder(Layers layers, Point origin, int seed)
+    public RoomBuilder(World world, Point origin, Random rng)
     {
-        this.layers = layers;
+        this.world = world;
+        this.rng = rng;
 
-        // TOOD: ran out of time so just use the bottom floor layer for the room for now.
-        // Later, implement so that it fills 'Floor' entity on layer[0], then 'Wall's up per layer, 'Roof' on last
+        width = rng.Next(Config.roomMinWidth, Config.roomMaxWidth);
+        depth = rng.Next(Config.roomMinDepth, Config.roomMaxDepth);
 
-        Fill(new Builder<Wall>(layers[0], new Point(0,0))); // remember layer 0 
-        rng = new Random(seed);
-        
-        var rWidth = rng.Next(Config.roomMinWidth, Config.roomMaxWidth);
-        var rHeight = rng.Next(Config.roomMinDepth, Config.roomMaxDepth);
-
-        FormatRoom(origin, rWidth, rHeight);
+        FormatRoom(origin, width, depth);
     }
 
-    public Dictionary<Point, Entity> Entities => entities;
-
-    void Fill<T>(Builder<T> builder) where T : Entity
+    void FormatRoom(Point center, int width, int height)
     {
-        for (int y = 0; y < layers[0].Depth; y++) // remember layer 0 
+        var xMin = center.X - (width / 2) + 1;
+        var yMin = center.Y - (height / 2) + 1;
+        var xMax = center.X + (width / 2) - 1;
+        var yMax = center.Y + (height / 2) - 1;
+
+        for (int i = 0; i < Config.worldHeight; i++)
         {
-            for (int x = 0; x < layers[0].Width; x++) // remember layer 0 
+            for (int y = 0; y < Config.depth; y++)
             {
-                builder.Retarget(x, y);
-                var filler = builder.Build();
-                entities.Add(filler.Node.Point, filler);
+                for (int x = 0; x < Config.width; x++)
+                {
+                    var grid = world[i];
+                    var node = grid[x, y];
+                    var p = node.Point;
+
+                    if (p.X < xMin || p.Y < yMin || p.X > xMax || p.Y > yMax)
+                    {
+                        continue;
+                    }
+                    
+                    if ((p.X == xMin || p.X == xMax) && (p.Y == yMin || p.Y == yMax))
+                    {
+                        new EntityBuilder<Corner>(grid, p).Build();
+                    }
+                    else if (p.X == xMin || p.X == xMax)
+                    {
+                        var vertical = new EntityBuilder<Wall>(grid, p).Build();
+                        vertical.SetSymbol('|');
+                    }
+                    else if (p.Y == yMin || p.Y == yMax)
+                    {
+                        var horizontal = new EntityBuilder<Wall>(grid, p).Build();
+                        horizontal.SetSymbol('-');
+                    }
+                    else
+                    {
+                        if (i == 0)
+                        {
+                            new EntityBuilder<Ground>(grid, p).Build();
+                        }
+                        if (i == Config.worldHeight - 1)
+                        {
+                            new EntityBuilder<Roof>(grid, p).Build();
+                        }
+                    }
+                }
             }
-        }
-    }
-
-    void FormatRoom(Point point, int width, int height)
-    {
-        var xMin = point.X - (width / 2) + 1;
-        var yMin = point.Y - (height / 2) + 1;
-        var xMax = point.X + (width / 2) - 1;
-        var yMax = point.Y + (height / 2) - 1;
-
-        foreach (var node in layers[0]) // remember layer 0 
-        {
-            var p = node.Point; 
-            var owner = layers[0][p.X, p.Y].Owner; // remember layer 0 
-
-            if (p.X < xMin || p.Y < yMin || p.X > xMax || p.Y > yMax)
-            {
-                entities.Remove(p);
-                owner = null;
-                continue;
-            }
-
-            if ((p.X == xMin || p.X == xMax) && (p.Y == yMin || p.Y == yMax))
-                owner.SetSymbol('*');
-            else if (p.X == xMin || p.X == xMax)
-                owner.SetSymbol('|');
-            else if (p.Y == yMin || p.Y == yMax)
-                owner.SetSymbol('-');
-            else
-                owner.SetSymbol('.');
         }
     }
 }

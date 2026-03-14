@@ -14,6 +14,11 @@ public abstract class EntityBase
     {
         guid = Guid.NewGuid();
     }
+    
+    ~EntityBase()
+    {
+        Log.Info($"{this} is being destroyed");
+    }
 
     public void SetName(string name)
     {

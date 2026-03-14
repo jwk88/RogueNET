@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Layers : IEnumerable<Grid>
+public class World : IEnumerable<Grid>
 {
     Grid[] grids;
     int height;
@@ -9,7 +9,7 @@ public class Layers : IEnumerable<Grid>
     public Grid[] Grids => grids;
     public int Height => height;
 
-    public Layers(int width, int depth, int height)
+    public World(int width, int depth, int height)
     {
         this.height = height;
         grids = new Grid[height];

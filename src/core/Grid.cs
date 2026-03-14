@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -32,8 +33,8 @@ public class Grid : IEnumerable<Node>
     {
         get
         {
-            if (x < 0 || x >= width)  return null;
-            if (y < 0 || y >= depth) return null;
+            if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
+            if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
 
             return cells[x, y];
         }
@@ -46,8 +47,8 @@ public class Grid : IEnumerable<Node>
             var x = point.X;
             var y = point.Y;
 
-            if (x < 0 || x >= width)  return null;
-            if (y < 0 || y >= depth) return null;
+            if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
+            if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
 
             return cells[x, y];
         }

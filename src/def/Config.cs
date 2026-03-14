@@ -2,7 +2,7 @@ public static class Config
 {
     public const int width = 10;
     public const int depth = 8;
-    public const int layerHeight = 5;
+    public const int worldHeight = 5;
     public const int roomMinWidth = 10;
     public const int roomMaxWidth = 10;
     public const int roomMinDepth = 8;

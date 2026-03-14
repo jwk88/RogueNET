@@ -4,6 +4,8 @@ public class RogueNET
 {
     EntityManager entityManager;
 
+    static int Seed = 1;
+
     public RogueNET()
     {
         entityManager = new EntityManager();
@@ -14,7 +16,7 @@ public class RogueNET
         Console.Clear();
 
         // Place the entitis:
-        entityManager.Setup();
+        entityManager.Setup(Seed);
         entityManager.Draw();
         
         // Player steps to the right seven times, collides with 'Door'
