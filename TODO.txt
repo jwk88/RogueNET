@@ -2,9 +2,7 @@ Version 0.2
 - Some basic entity generation and interactions between them have been implemented
 - Next steps would be to:
     - 1.
-    - A fun mechanic would be to be able destroy any entities that are small enough to destroy
-    - For example, the openable objects have handles that can be locked
-    - The player could destroy the handle, and if the door was already locked, it would become unopenable
-    - (And block enemies from entering room)
-    - 2.
-    - Finish the layering of grids, because right now rooms are only on floor level
+    -   A fun mechanic would be to be able destroy any entities that are small enough to destroy
+    -   For example, the openable objects have handles that can be locked
+    -   The player could destroy the handle, and if the door was already locked, it would become unopenable
+    -   (And block enemies from entering room) 
