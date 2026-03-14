@@ -1,5 +1,11 @@
 public class Door : Entity, IInterractable
 {
+    public Door()
+    {
+        SetSymbol('D');
+        SetName("Door");
+    }
+
     protected IOpenable openable;
 
     public void Inject(IInterractable interractable)

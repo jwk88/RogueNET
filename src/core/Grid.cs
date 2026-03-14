@@ -5,19 +5,21 @@ public class Grid : IEnumerable<Node>
 {
     Node[,] cells;
     int width;
-    int height;
+    int depth;
+    Point origin;
 
     public int Width => width;
-    public int Height => height;
+    public int Depth => depth;
+    public Point Origin => origin;
 
-    public Grid(int width, int height)
+    public Grid(int width, int depth)
     {
         this.width = width;
-        this.height = height;
+        this.depth = depth;
 
-        cells = new Node[width, height];
-
-        for (int y = 0; y < height; y++)
+        cells = new Node[width, depth];
+        origin = new Point(width / 2, depth / 2);
+        for (int y = 0; y < depth; y++)
         {
             for (int x = 0; x < width; x++)
             {
@@ -31,7 +33,7 @@ public class Grid : IEnumerable<Node>
         get
         {
             if (x < 0 || x >= width)  return null;
-            if (y < 0 || y >= height) return null;
+            if (y < 0 || y >= depth) return null;
 
             return cells[x, y];
         }
@@ -45,7 +47,7 @@ public class Grid : IEnumerable<Node>
             var y = point.Y;
 
             if (x < 0 || x >= width)  return null;
-            if (y < 0 || y >= height) return null;
+            if (y < 0 || y >= depth) return null;
 
             return cells[x, y];
         }

@@ -3,7 +3,7 @@ public abstract class Entity : EntityBase
     protected Grid grid;
     protected Point point;
 
-    public Node node => grid[point];
+    public Node Node => grid[point];
     bool isPlaced;
 
     public virtual void SetGrid(Grid grid)
@@ -29,9 +29,9 @@ public abstract class Entity : EntityBase
             return false;
         }
 
-        if (node != null)
+        if (Node != null)
         {
-            node.SetOwner(null);
+            Node.SetOwner(null);
         }
 
         if (isPlaced)
@@ -40,7 +40,7 @@ public abstract class Entity : EntityBase
         }
 
         this.point = point;
-        node.SetOwner(this);
+        Node.SetOwner(this);
         
         isPlaced = true;
         

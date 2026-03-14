@@ -49,6 +49,11 @@ public class Actor : Entity
     {
         var item = inventory[index];
         var target = Target(xDir, yDir);
+        if (target.Owner == null)
+        {
+            Log.Info($"{this} tried to use {item} at {target}, but there's nothing there!");
+            return;
+        }
         if (item is IUsable)
         {
             var usable = item as IUsable;

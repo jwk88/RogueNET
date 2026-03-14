@@ -1,19 +1,22 @@
 using System;
+using System.Collections.Generic;
 
 public static class Log
 {
+    public static Queue<string> logs = new Queue<string>();
+
     public static void Info(string msg)
     {
-        Console.WriteLine($"[Info] {msg}");
+        logs.Enqueue($"[Info] {msg}");
     }
 
     public static void Warn(string msg)
     {
-        Console.WriteLine($"[Warning] {msg}");
+        logs.Enqueue($"[Warning] {msg}");
     }
 
     public static void Debug(string msg)
     {
-        Console.WriteLine($"[DEBUG] {msg}");
+        logs.Enqueue($"[DEBUG] {msg}");
     }
 }

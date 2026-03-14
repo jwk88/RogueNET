@@ -7,6 +7,9 @@ public class Container : Door, ILootable
     public Container()
     {
         contents = new List<Entity>();
+
+        SetSymbol('C');
+        SetName("Container");
     }
 
     public virtual void SetContents(params Entity[] contents)

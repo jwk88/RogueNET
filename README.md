@@ -49,51 +49,40 @@ on the right side.
 The following code drives the interaction sequence.
 
 ``` csharp
-// place the entities
-entityManager.Setup();
+        // place the entitis:
+        entityManager.Setup();
+        entityManager.Draw();
+        
+        // move player to the right four times
+        entityManager.Player.Move(4, 0);
 
-// Player starts at the middle
-// Steel Door to the right
-// Wooden Chest to the left
+        // stands now left of the door, interracts to the right, but the door is locked
+        entityManager.Player.Interract(1, 0);
+        entityManager.Draw();
 
-// move player to the right four times
-for (int i = 0; i < 4; i++)
-{
-    entityManager.Player.Move(1, 0);
-}
+        // player moves to the left seven times, collides with the chest
+        entityManager.Player.Move(-7, 0);
 
-// stands left of the door, tries to interact
-// but the door is locked
-entityManager.Player.Interract(1, 0);
+        // player tries to loot to the left, but the chest is closed
+        entityManager.Player.Loot(-1, 0);
 
-// move player left until reaching the chest
-for (int i = 0; i < 9; i++)
-{
-    entityManager.Player.Move(-1, 0);
-}
+        // player interracts to the left, opening the chest
+        entityManager.Player.Interract(-1, 0);
 
-// attempt to loot the chest (fails because closed)
-entityManager.Player.Loot(-1, 0);
+        // player tries to loot again to the left, and as chest is now open, gets the contents
+        entityManager.Player.Loot(-1, 0);
+        entityManager.Draw();
 
-// interact with the chest to open it
-entityManager.Player.Interract(-1, 0);
+        // player moves seven times to the right, colliding with the door
+        entityManager.Player.Move(7, 0);
 
-// loot again (now succeeds)
-entityManager.Player.Loot(-1, 0);
+        // player uses first item in inventory, to the right
+        // a key -> lock check is made, unlocking the handle on the door
+        entityManager.Player.UseItem(0, 1, 0);
 
-// walk back to the door
-for (int i = 0; i < 9; i++)
-{
-    entityManager.Player.Move(1, 0);
-}
-
-// use the first item in inventory on the door
-// the key unlocks the door handle
-entityManager.Player.UseItem(0, 1, 0);
-
-// interact with the door again
-// now it opens
-entityManager.Player.Interract(1, 0);
+        // player interracts to the right, opening the door (not locked anymore)
+        entityManager.Player.Interract(1, 0);
+        entityManager.Draw();
 ```
 
 ------------------------------------------------------------------------
