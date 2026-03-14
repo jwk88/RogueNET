@@ -11,7 +11,7 @@ public class Actor : Entity
 
     Node Target(int xDir, int yDir)
     {
-        return grid[node.X + xDir, node.Y + yDir];
+        return grid[point.X + xDir, point.Y + yDir];
     }
 
     public virtual Entity Interract(int xDir, int yDir)

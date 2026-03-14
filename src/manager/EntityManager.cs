@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class EntityManager
 {
     Grid grid;
-    Cell origin;
+    Point origin;
     Dictionary<Type, Entity> entities;
 
     public EntityManager()
@@ -13,13 +13,15 @@ public class EntityManager
         var originX = Config.width / 2;
         var originY = Config.height / 2;
 
-        origin = grid[originX, originY];
+        origin = grid[originX, originY].Point;
         entities = new Dictionary<Type, Entity>();
     }
 
     public void Setup()
     {
         // TODO: generate the positions and layout procedurally later
+
+        var DungeonBuilder = new DungeonBuilder();
         
         var builders = new List<Builder>();
         builders.Add(new Builder(typeof(Player), grid, origin));

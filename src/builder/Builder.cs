@@ -2,30 +2,35 @@ using System;
 
 public class Builder
 {
-    Grid grid;
-    Cell target;
-    Type type;
+    protected Grid grid;
+    protected Point point;
+    protected Type type;
 
-    public Builder(Type type, Grid grid, Cell target)
+    public Builder() { }
+    public Builder(Type type, Grid grid, Point point)
     {
         this.grid = grid;
-        this.target = target;
+        this.point = point;
         this.type = type;
     }
 
     public void Build(Action<Entity, Type> onBuild)
     {
         var entity = (Entity)Activator.CreateInstance(type);
-        var node = grid[target.X, target.Y];
-        if (node.Owner != null)
+        if (grid[point.X, point.Y].Owner != null)
         {
             Log.Warn("Tried to build entity on top of an existing entity. Cancelled.");
             return;
         }
 
         entity.SetGrid(grid);
-        entity.SetNode(node);
+        entity.SetPosition(point);
 
         onBuild?.Invoke(entity, type);
+    }
+
+    public void Retarget(Point target)
+    {
+        this.point = target;
     }
 }

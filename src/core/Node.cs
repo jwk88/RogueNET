@@ -1,12 +1,22 @@
-public class Node : Cell
+public class Node
 {
-    public Entity Owner { get => owner; set => owner = value; }
+    Point point;
     Entity owner;
 
-    public bool Occupied { get => Owner != null; }
+    public Entity Owner => owner;
+    public bool Occupied => Owner != null;
+    public Point Point => point;
+    public int X => point.X;
+    public int Y => point.Y;
 
-    public Node(int x, int y) : base(x, y)
+    public Node(int x, int y)
     {
         owner = null;
+        point = new Point(x, y);
+    }
+
+    public void SetOwner(Entity owner)
+    {
+        this.owner = owner;
     }
 }

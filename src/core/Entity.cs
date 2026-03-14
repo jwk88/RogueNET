@@ -1,8 +1,9 @@
 public abstract class Entity : EntityBase
 {
     protected Grid grid;
-    protected Node node;
+    protected Point point;
 
+    public Node node => grid[point];
     bool setToGrid;
 
     public virtual void SetGrid(Grid grid)
@@ -10,8 +11,12 @@ public abstract class Entity : EntityBase
         this.grid = grid;
     }
 
-    public virtual bool SetNode(Node next)
+    public virtual void Move(int xDir, int yDir) => SetPosition(point.X + xDir, point.Y + yDir);
+    public virtual bool SetPosition(int x, int y) => SetPosition(new Point(x, y));
+    public virtual bool SetPosition(Point point)
     {
+        var next = grid[point];
+
         if (next == null)
         {
             Log.Info($"{this} path was blocked, edge of the world");
@@ -26,15 +31,15 @@ public abstract class Entity : EntityBase
 
         if (node != null)
         {
-            node.Owner = null;
+            node.SetOwner(null);
         }
 
-        node = next;
-        node.Owner = this;
+        this.point = point;
+        node.SetOwner(this);
 
         if (setToGrid)
         {
-            Log.Info($"{this} moved to {node}");    
+            Log.Info($"{this} moved to {point}");    
         }
         
         setToGrid = true;
@@ -42,17 +47,11 @@ public abstract class Entity : EntityBase
         return true;
     }
 
-    public virtual void Move(int xDir, int yDir)
-    {
-        var next = grid[node.X + xDir, node.Y + yDir];
-        SetNode(next);
-    }
-
     public override string ToString()
     {
-        if (node != null)
+        if (point.Valid)
         {
-            return $"{base.ToString()} {node}";    
+            return $"{base.ToString()} {point}";    
         }
         else
         {

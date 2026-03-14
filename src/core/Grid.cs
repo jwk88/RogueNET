@@ -7,6 +7,9 @@ public class Grid : IEnumerable<Node>
     int width;
     int height;
 
+    public int Width => width;
+    public int Height => height;
+
     public Grid(int width, int height)
     {
         this.width = width;
@@ -34,14 +37,28 @@ public class Grid : IEnumerable<Node>
         }
     }
 
-    public Cell RightOf(Cell cell, int offsetX = 1)
+    public Node this[Point point]
     {
-        return cells[cell.X + offsetX, cell.Y];
+        get
+        {
+            var x = point.X;
+            var y = point.Y;
+
+            if (x < 0 || x >= width)  return null;
+            if (y < 0 || y >= height) return null;
+
+            return cells[x, y];
+        }
     }
 
-    public Cell LeftOf(Cell cell, int offsetX = -1)
+    public Point RightOf(Point point, int offsetX = 1)
     {
-        return cells[cell.X + offsetX, cell.Y];
+        return cells[point.X + offsetX, point.Y].Point;
+    }
+
+    public Point LeftOf(Point point, int offsetX = -1)
+    {
+        return cells[point.X + offsetX, point.Y].Point;
     }
 
     public IEnumerator<Node> GetEnumerator()
