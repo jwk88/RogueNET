@@ -1,14 +1,23 @@
 public abstract class Entity : EntityBase
 {
-    protected Grid grid;
+    protected World world;
     protected Point point;
+    protected int height = 1;
+    protected int layer;
 
-    public Node Node => grid[point];
+    public int Height => height;
     bool isPlaced;
+    Node Node => world[layer][point];
 
-    public virtual void SetGrid(Grid grid)
+    public void SetHeight(int height)
     {
-        this.grid = grid;
+        this.height = height;
+    }
+
+    public virtual void SetWorld(World world, int layer)
+    {
+        this.world = world;
+        this.layer = layer;
     }
 
     public void StepRight(int count)
@@ -36,7 +45,7 @@ public abstract class Entity : EntityBase
     public virtual bool SetPosition(int x, int y, bool overwrite = false) => SetPosition(new Point(x, y), overwrite);
     public virtual bool SetPosition(Point point, bool overwrite = false)
     {
-        var next = grid[point];
+        var next = world[layer][point];
 
         if (next.Occupied && !overwrite)
         {
@@ -46,7 +55,7 @@ public abstract class Entity : EntityBase
 
         if (Node != null)
         {
-            Node.SetOwner(null);
+            ReleaseOwnership();
         }
 
         if (isPlaced)
@@ -60,6 +69,16 @@ public abstract class Entity : EntityBase
         isPlaced = true;
         
         return true;
+    }
+
+    public void ReleaseOwnership()
+    {
+        if (Node == null) return;
+        for (int i = 0; i < height; i++)
+        {
+            var above = world[layer + i][Node.Point];
+            above.SetOwner(null);
+        }
     }
 
     public override string ToString()

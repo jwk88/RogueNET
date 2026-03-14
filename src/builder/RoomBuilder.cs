@@ -39,30 +39,32 @@ public class RoomBuilder
                     {
                         continue;
                     }
+
+                    if (i == 0)
+                    {
+                        new EntityBuilder<Ground>(world, layer: i, p).Build();
+                        continue;
+                    }
                     
                     if ((p.X == xMin || p.X == xMax) && (p.Y == yMin || p.Y == yMax))
                     {
-                        new EntityBuilder<Corner>(grid, p).Build();
+                        new EntityBuilder<Corner>(world, layer: i, p).Build();
                     }
                     else if (p.X == xMin || p.X == xMax)
                     {
-                        var vertical = new EntityBuilder<Wall>(grid, p).Build();
+                        var vertical = new EntityBuilder<Wall>(world, layer: i, p).Build();
                         vertical.SetSymbol('|');
                     }
                     else if (p.Y == yMin || p.Y == yMax)
                     {
-                        var horizontal = new EntityBuilder<Wall>(grid, p).Build();
+                        var horizontal = new EntityBuilder<Wall>(world, layer: i, p).Build();
                         horizontal.SetSymbol('-');
                     }
                     else
                     {
-                        if (i == 0)
-                        {
-                            new EntityBuilder<Ground>(grid, p).Build();
-                        }
                         if (i == Config.worldHeight - 1)
                         {
-                            new EntityBuilder<Roof>(grid, p).Build();
+                            new EntityBuilder<Roof>(world, layer: i, p).Build();
                         }
                     }
                 }

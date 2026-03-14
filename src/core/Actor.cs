@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public class Actor : Entity
 {
     List<Entity> inventory;
-    Node Target(int xDir, int yDir) => grid[point + new Point(xDir, yDir)];
+    Node Target(int xDir, int yDir) => world[layer][point + new Point(xDir, yDir)];
 
     public Actor()
     {

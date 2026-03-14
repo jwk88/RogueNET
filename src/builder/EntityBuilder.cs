@@ -2,19 +2,27 @@ using System;
 
 public class EntityBuilder<T> where T : Entity
 {
-    protected Grid grid;
+    protected World world;
     protected Point point;
+    protected int layer;
+    protected int height = 1;
 
-    public EntityBuilder(Grid grid, Point point)
+    public EntityBuilder(World world, int layer, Point point)
     {
-        this.grid = grid;
+        this.world = world;
         this.point = point;
+        this.layer = layer;
     }
 
-    public T Build(bool overwrite = false)
+    public void SetCustomHeight(int height)
+    {
+        this.height = height;
+    }
+
+    public virtual T Build(bool overwrite = false)
     {
         var entity = (Entity)Activator.CreateInstance(typeof(T));
-        var node = grid[point.X, point.Y];
+        var node = world[layer][point.X, point.Y];
         if (node.Owner != null && !overwrite)
         {
             var msg = "Tried to build entity on top of an existing entity";
@@ -22,16 +30,16 @@ public class EntityBuilder<T> where T : Entity
             msg += '\n' + "Builder: " + typeof(T);
             throw new InvalidOperationException(msg);
         }
-        
-        entity.SetGrid(grid);
+
+        entity.SetWorld(world, layer);
         entity.SetPosition(point, overwrite);
+        entity.SetHeight(height);
+        for (int i = 0; i < height; i++)
+        {
+            var above = world[layer + i][node.X, node.Y];
+            above.SetOwner(entity);
+        }
 
         return (T)entity;
-    }
-
-    public void Retarget(int x, int y) => Retarget(new Point(x, y));
-    public void Retarget(Point point)
-    {
-        this.point = point;
     }
 }

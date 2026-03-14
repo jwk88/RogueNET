@@ -12,7 +12,7 @@ public static class Log
 
     public static void Warn(string msg)
     {
-        logs.Enqueue($"[Warning] {msg}");
+        logs.Enqueue($"[WARNING] {msg}");
     }
 
     public static void Debug(string msg)

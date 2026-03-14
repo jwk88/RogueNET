@@ -5,9 +5,13 @@ public class EntityManager
     static World world;
     public Player Player { get; private set; }
 
-    public static Grid Ground => world[0];
-    public static Grid Floor => world[1];
-    public static Grid Roof => world[Config.worldHeight - 1];
+    public static int GroundLayer = 0;
+    public static int FloorLayer = 1;
+    public static int RoofLayer = Config.worldHeight - 1;
+    public static int RoomHeight = Config.worldHeight - 2;
+    public static Grid Ground => world[GroundLayer];
+    public static Grid Floor => world[FloorLayer];
+    public static Grid Roof => world[RoofLayer];
 
     public EntityManager()
     {
@@ -19,9 +23,11 @@ public class EntityManager
         new RoomBuilder(world, Floor.Origin, new Random(seed));
 
         var spawn = Floor.Origin;
-        var playerBuild = new EntityBuilder<Player>(Floor, spawn);
-        var doorBuild   = new EntityBuilder<Door>(Floor, spawn + (Point.Right * 4));
-        var chestBuild  = new EntityBuilder<Container>(Floor, spawn + (Point.Left * 3));
+        var playerBuild = new EntityBuilder<Player>(world, FloorLayer, spawn);
+        var doorBuild   = new EntityBuilder<Door>(world, FloorLayer, spawn + (Point.Right * 4));
+        var chestBuild  = new EntityBuilder<Container>(world, FloorLayer, spawn + (Point.Left * 3));
+
+        doorBuild.SetCustomHeight(RoomHeight);
 
         var player = playerBuild.Build();
         var door = doorBuild.Build(overwrite: true);

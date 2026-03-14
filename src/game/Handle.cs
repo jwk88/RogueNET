@@ -33,6 +33,10 @@ public class Handle : Entity, IOpenable
 
         Log.Info($"{Owner} is now open");
         open = true;
+        if (owner is Door && owner is not Container)
+        {
+            owner.ReleaseOwnership();
+        }
     }
 
     public void Lock()
