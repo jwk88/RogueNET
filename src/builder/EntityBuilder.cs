@@ -32,13 +32,8 @@ public class EntityBuilder<T> where T : Entity
         }
 
         entity.SetWorld(world, layer);
-        entity.SetPosition(point, overwrite);
         entity.SetHeight(height);
-        for (int i = 0; i < height; i++)
-        {
-            var above = world[layer + i][node.X, node.Y];
-            above.SetOwner(entity);
-        }
+        entity.SetPosition(point, overwrite);
 
         return (T)entity;
     }

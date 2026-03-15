@@ -65,6 +65,11 @@ public abstract class Entity : EntityBase
 
         this.point = point;
         Node.SetOwner(this);
+        for (int i = 0; i < height; i++)
+        {
+            var above = world[layer + i][Node.X, Node.Y];
+            above.SetOwner(this);
+        }
         
         isPlaced = true;
         
