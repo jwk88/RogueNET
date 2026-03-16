@@ -19,6 +19,7 @@ The goal is a system where **gameplay emerges from logical composition rather th
 | `@`    | Player       |
 | `C`    | Wooden Chest |
 | `D`    | Steel Door   |
+| `r`    | Rat          |
 
 The player starts in the middle of the room.
 A **Wooden Chest** is located on the left side and a **Steel Door** is on the right side.
