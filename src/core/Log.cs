@@ -19,4 +19,9 @@ public static class Log
     {
         logs.Enqueue($"[DEBUG] {msg}");
     }
+
+    public static void Action(string msg)
+    {
+        logs.Enqueue($"[ACTION] {msg}");
+    }
 }

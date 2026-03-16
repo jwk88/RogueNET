@@ -1,3 +1,5 @@
+using System;
+
 public abstract class Entity : EntityBase
 {
     protected Grid grid;
@@ -25,10 +27,11 @@ public abstract class Entity : EntityBase
         carry = entity;
     }
 
-    public void StepUp(int count)
+    public void StepUp(int count, Action onStep = null)
     {
         for (int i = 0; i < count; i++)
         {
+            onStep?.Invoke();
             if (!SetPosition(point.X, point.Y - 1))
             {
                 break;
@@ -36,10 +39,11 @@ public abstract class Entity : EntityBase
         }
     }
 
-    public void StepDown(int count)
+    public void StepDown(int count, Action onStep = null)
     {
         for (int i = 0; i < count; i++)
         {
+            onStep?.Invoke();
             if (!SetPosition(point.X, point.Y + 1))
             {
                 break;
@@ -47,10 +51,11 @@ public abstract class Entity : EntityBase
         }
     }
 
-    public void StepRight(int count)
+    public void StepRight(int count, Action onStep = null)
     {
         for (int i = 0; i < count; i++)
-        {
+        {   
+            onStep?.Invoke();
             if (!SetPosition(point.X + 1, point.Y))
             {
                 break;
@@ -58,10 +63,11 @@ public abstract class Entity : EntityBase
         }
     }
 
-    public void StepLeft(int count)
+    public void StepLeft(int count, Action onStep = null)
     {
         for (int i = 0; i < count; i++)
         {
+            onStep?.Invoke();
             if (!SetPosition(point.X - 1, point.Y))
             {
                 break;

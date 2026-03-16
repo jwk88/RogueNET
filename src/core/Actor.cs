@@ -18,6 +18,7 @@ public class Actor : Entity
 
     public virtual void Interract(int xDir, int yDir)
     {
+        Log.Action($"INTERRACT");
         if (xDir == 0 && yDir == 0) return;
         var target = Target(xDir, yDir);
         if (target.Owner != null)
@@ -40,6 +41,7 @@ public class Actor : Entity
 
     public virtual void Loot(int xDir, int yDir)
     {
+        Log.Action($"LOOT");
         if (xDir == 0 && yDir == 0) return;
         var node = Target(xDir, yDir);
         if (node.Owner == null)
@@ -57,6 +59,7 @@ public class Actor : Entity
 
     public virtual void UseItem(int index, int xDir, int yDir)
     {
+        Log.Action($"USE ITEM");
         if (inventory.Count == 0)
         {
             Log.Info($"{this} searched his inventory for item {index}, but inventory is empty!");
@@ -79,6 +82,7 @@ public class Actor : Entity
 
     public virtual void Pickup(int xDir, int yDir)
     {
+        Log.Action("PICK UP");
         if (xDir == 0 && yDir == 0) return;
         var target = Target(xDir, yDir);
         if (target.Owner == null)
@@ -95,6 +99,7 @@ public class Actor : Entity
 
     public virtual void Putdown(int xDir, int yDir)
     {
+        Log.Action("PUT DOWN");
         if (xDir == 0 && yDir == 0) return;
         if (Carry == null)
         {

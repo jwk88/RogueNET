@@ -3,22 +3,20 @@ using System.Text;
 
 public class ConsoleManager
 {
-    StringBuilder sb;
+    StringBuilder full;
+
+    public string Title { get; set; }
 
     public ConsoleManager()
     {
-        sb = new StringBuilder();
+        full = new StringBuilder();
     }
 
     public string Draw(Grid grid)
     {
-        sb.AppendLine();
-        sb.AppendLine("-----------------------------------------");
-
-        while (Log.logs.Count > 0)
-        {
-            sb.AppendLine(Log.logs.Dequeue());
-        }
+        Console.Clear();
+        var frame = new StringBuilder();
+        frame.AppendLine($"-------{Title}-------");
 
         int depth = Config.depth;
         int width = Config.width;
@@ -39,17 +37,24 @@ public class ConsoleManager
                 line[x] = symbol;
             }
 
-            sb.AppendLine(new string(line));
+            frame.AppendLine(new string(line));
         }
 
-        string output = sb.ToString();
+        frame.AppendLine();
 
-        Console.Write(output);
-        return output;
+        while (Log.logs.Count > 0)
+        {
+            frame.AppendLine(Log.logs.Dequeue());
+        }
+
+        full.Append(frame.ToString());
+        Console.Write(frame.ToString());
+        Console.ReadKey();
+        return full.ToString();
     }
 
     public string GetOutput()
     {
-        return sb.ToString();
+        return full.ToString();
     }
 }
