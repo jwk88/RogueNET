@@ -4,6 +4,9 @@ public class Door : Entity, IInterractable
     {
         SetSymbol('D');
         SetName("Door");
+
+        stats = new Stats();
+        stats.SetWeight(100);
     }
 
     protected IOpenable openable;

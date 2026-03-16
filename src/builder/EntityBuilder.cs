@@ -2,27 +2,19 @@ using System;
 
 public class EntityBuilder<T> where T : Entity
 {
-    protected World world;
+    protected Grid grid;
     protected Point point;
-    protected int layer;
-    protected int height = 1;
 
-    public EntityBuilder(World world, int layer, Point point)
+    public EntityBuilder(Grid grid, Point point)
     {
-        this.world = world;
+        this.grid = grid;
         this.point = point;
-        this.layer = layer;
-    }
-
-    public void SetCustomHeight(int height)
-    {
-        this.height = height;
     }
 
     public virtual T Build(bool overwrite = false)
     {
         var entity = (Entity)Activator.CreateInstance(typeof(T));
-        var node = world[layer][point.X, point.Y];
+        var node = grid[point.X, point.Y];
         if (node.Owner != null && !overwrite)
         {
             var msg = "Tried to build entity on top of an existing entity";
@@ -31,8 +23,7 @@ public class EntityBuilder<T> where T : Entity
             throw new InvalidOperationException(msg);
         }
 
-        entity.SetWorld(world, layer);
-        entity.SetHeight(height);
+        entity.SetGrid(grid);
         entity.SetPosition(point, overwrite);
 
         return (T)entity;

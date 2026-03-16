@@ -4,5 +4,8 @@ public class Ground : Entity
     {
         SetSymbol('.');
         SetName("Ground");
+
+        stats = new Stats();
+        stats.SetWeight(double.MaxValue);
     }
 }

@@ -37,122 +37,24 @@ on the right side.
 
 # Test Code
 
-The following code drives the interaction sequence.
+The automated tests implement the interaction sequences. See the Run() methods in the test files:
 
-``` csharp
-// Place the entitis:
-entityManager.Setup();
-entityManager.Draw();
-        
-// Player steps to the right seven times, collides with 'Door'
-entityManager.Player.StepRight(7);
-
-// Stands now left of the door, interracts to the right, but the door is locked
-entityManager.Player.Interract(1, 0);
-entityManager.Draw();
-
-// Player steps to the left seven times, collides with 'Chest'
-entityManager.Player.StepLeft(7);
-
-// Player tries to loot to the left, but the chest is closed
-entityManager.Player.Loot(-1, 0);
-
-// Player interracts to the left, opening the chest
-entityManager.Player.Interract(-1, 0);
-
-// Player tries to loot again to the left, and as chest is now open, gets the contents
-entityManager.Player.Loot(-1, 0);
-entityManager.Draw();
-
-// Player steps seven times to the right, colliding with the door
-entityManager.Player.StepRight(7);
-
-// player uses first item in inventory, to the right
-// a key -> lock check is made, unlocking the handle on the door
-entityManager.Player.UseItem(index: 0, 1, 0);
-
-// player interracts to the right, opening the door (not locked anymore)
-entityManager.Player.Interract(1, 0);
-entityManager.Draw();
-```
+- [Test1.Run()](src/test/Test1.cs#L40-L58)
+- [Test1b.Run()](src/test/Test1b.cs#L8-L23)
 
 ------------------------------------------------------------------------
 
-# Runtime Output
+# Automated Test Outputs
 
-```
------------------------------------------
-[Info] 'John Doe' has been spawned at {5:4}
-[Info] 'Door' has been spawned at {9:4}
-[Info] 'Container' has been spawned at {2:4}
- 
-*-------*
-|.......|
-|.......|
-|C..@...D
-|.......|
-|.......|
-*-------*
+The project includes automated tests that validate the interaction system. The test outputs are saved to `Test1.txt` and `Test1b.txt` files.
 
------------------------------------------
-[Info] 'John Doe' is moving from {5:4} to {6:4}
-[Info] 'John Doe' is moving from {6:4} to {7:4}
-[Info] 'John Doe' is moving from {7:4} to {8:4}
-[Info] 'John Doe' {8:4} path was blocked by 'Steel Door' {9:4}
-[Info] 'John Doe' {8:4} interracts with 'Steel Door' {9:4}
-[Info] 'Steel Door' {9:4} is locked
- 
-*-------*
-|.......|
-|.......|
-|C.....@D
-|.......|
-|.......|
-*-------*
+## Test1 Output
 
------------------------------------------
-[Info] 'John Doe' is moving from {8:4} to {7:4}
-[Info] 'John Doe' is moving from {7:4} to {6:4}
-[Info] 'John Doe' is moving from {6:4} to {5:4}
-[Info] 'John Doe' is moving from {5:4} to {4:4}
-[Info] 'John Doe' is moving from {4:4} to {3:4}
-[Info] 'John Doe' {3:4} path was blocked by 'Wooden Chest' {2:4}
-[Info] 'John Doe' {3:4} tries to loot 'Wooden Chest' {2:4}
-[Info] 'Wooden Chest' {2:4} is closed!
-[Info] 'John Doe' {3:4} interracts with 'Wooden Chest' {2:4}
-[Info] 'Wooden Chest' {2:4} is now open
-[Info] 'John Doe' {3:4} tries to loot 'Wooden Chest' {2:4}
-[Info] 'John Doe' {3:4} placed 'Silver Key' {-,-} in their inventory
- 
-*-------*
-|.......|
-|.......|
-|C@.....D
-|.......|
-|.......|
-*-------*
+[View Test1.txt](Test1.txt)
 
------------------------------------------
-[Info] 'John Doe' is moving from {3:4} to {4:4}
-[Info] 'John Doe' is moving from {4:4} to {5:4}
-[Info] 'John Doe' is moving from {5:4} to {6:4}
-[Info] 'John Doe' is moving from {6:4} to {7:4}
-[Info] 'John Doe' is moving from {7:4} to {8:4}
-[Info] 'John Doe' {8:4} path was blocked by 'Steel Door' {9:4}
-[Info] 'John Doe' {8:4} uses 'Silver Key' {-,-} on 'Steel Door' {9:4}
-[Info] 'Steel Door' {9:4} was owned by 'Steel Door Handle' {-,-}
-[Info] 'John Doe' {8:4} used 'Silver Key' {-,-} to open 'Steel Door Handle' {-,-} on 'Steel Door' {9:4}
-[Info] 'John Doe' {8:4} interracts with 'Steel Door' {9:4}
-[Info] 'Steel Door' {9:4} is now open
- 
-*-------*
-|.......|
-|.......|
-|C.....@D
-|.......|
-|.......|
-*-------*
-```
+## Test1b Output
+
+[View Test1b.txt](Test1b.txt)
 
 ------------------------------------------------------------------------
 

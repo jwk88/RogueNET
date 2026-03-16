@@ -3,11 +3,19 @@ using System.Collections.Generic;
 public class Actor : Entity
 {
     List<Entity> inventory;
-    Node Target(int xDir, int yDir) => world[layer][point + new Point(xDir, yDir)];
+    Entity carrying;
+    Node Target(int xDir, int yDir) => grid[point + new Point(xDir, yDir)];
 
     public Actor()
     {
         inventory = new List<Entity>();
+        carrying = null;
+    }
+
+    public virtual void AddToInventory(Entity entity)
+    {
+        inventory.Add(entity);
+        Log.Info($"{this} placed {entity} in their inventory");
     }
 
     public virtual void Interract(int xDir, int yDir)
@@ -69,9 +77,39 @@ public class Actor : Entity
         }
     }
 
-    public virtual void AddToInventory(Entity entity)
+    public virtual void Pickup(int xDir, int yDir)
     {
-        inventory.Add(entity);
-        Log.Info($"{this} placed {entity} in their inventory");
+        var target = Target(xDir, yDir);
+        if (target.Owner == null)
+        {
+            Log.Info($"{this} tried to pick up air!");
+            return;
+        }
+
+        // TODO: strength vs weight check here later, so can't pickup walls and stuff
+        var below = target.Owner.GetBelow();
+        carrying = target.Owner;
+        target.SetOwner(null);
+        Log.Info($"{this} picked up {carrying} from {below}");
+    }
+
+    public virtual void Putdown(int xDir, int yDir)
+    {
+        if (carrying == null)
+        {
+            Log.Info($"{this} is not carrying anything to put down!");
+            return;
+        }
+
+        var target = Target(xDir, yDir);
+        if (target.Owner != null)
+        {
+             // TODO: place on top of another, then do weight checks of what happens etc
+             return;
+        }
+
+        target.SetOwner(carrying);
+        carrying = null;
+        Log.Info($"{this} put down the {target.Owner} he was carrying");
     }
 }

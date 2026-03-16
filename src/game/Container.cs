@@ -10,6 +10,9 @@ public class Container : Door, ILootable
 
         SetSymbol('C');
         SetName("Container");
+
+        stats = new Stats();
+        stats.SetWeight(50);
     }
 
     public virtual void SetContents(params Entity[] contents)

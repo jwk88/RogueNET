@@ -9,6 +9,14 @@ public class Handle : Entity, IOpenable
 
     public Entity Owner => owner;
 
+    public Handle()
+    {
+        SetSymbol('h');
+
+        stats = new Stats();
+        stats.SetWeight(1);
+    }
+
     public void Inject(IInterractable interractable)
     {
         throw new System.NotImplementedException();

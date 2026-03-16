@@ -1,23 +1,20 @@
 public abstract class Entity : EntityBase
 {
-    protected World world;
+    protected Grid grid;
     protected Point point;
-    protected int height = 1;
-    protected int layer;
+    protected Stats stats;
 
-    public int Height => height;
     bool isPlaced;
-    Node Node => world[layer][point];
+    Node Node => grid[point];
 
-    public void SetHeight(int height)
+    public void SetStats(Stats stats)
     {
-        this.height = height;
+        this.stats = stats;
     }
 
-    public virtual void SetWorld(World world, int layer)
+    public virtual void SetGrid(Grid grid)
     {
-        this.world = world;
-        this.layer = layer;
+        this.grid = grid;
     }
 
     public void StepRight(int count)
@@ -45,7 +42,7 @@ public abstract class Entity : EntityBase
     public virtual bool SetPosition(int x, int y, bool overwrite = false) => SetPosition(new Point(x, y), overwrite);
     public virtual bool SetPosition(Point point, bool overwrite = false)
     {
-        var next = world[layer][point];
+        var next = grid[point];
 
         if (next.Occupied && !overwrite)
         {
@@ -55,7 +52,7 @@ public abstract class Entity : EntityBase
 
         if (Node != null)
         {
-            ReleaseOwnership();
+            Node.SetOwner(null);
         }
 
         if (isPlaced)
@@ -65,25 +62,9 @@ public abstract class Entity : EntityBase
 
         this.point = point;
         Node.SetOwner(this);
-        for (int i = 0; i < height; i++)
-        {
-            var above = world[layer + i][Node.X, Node.Y];
-            above.SetOwner(this);
-        }
-        
         isPlaced = true;
         
         return true;
-    }
-
-    public void ReleaseOwnership()
-    {
-        if (Node == null) return;
-        for (int i = 0; i < height; i++)
-        {
-            var above = world[layer + i][Node.Point];
-            above.SetOwner(null);
-        }
     }
 
     public override string ToString()
@@ -96,5 +77,15 @@ public abstract class Entity : EntityBase
         {
             return $"{base.ToString()} {point}";
         }
+    }
+
+    public Entity GetBelow()
+    {
+        return grid[Node.Point].Owner;
+    }
+
+    public Entity GetAbove()
+    {
+        return grid[Node.Point].Owner;
     }
 }

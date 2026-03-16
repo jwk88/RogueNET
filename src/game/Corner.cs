@@ -4,5 +4,8 @@ public class Corner : Entity
     {
         SetSymbol('*');
         SetName("Corner");
+
+        stats = new Stats();
+        stats.SetWeight(double.MaxValue);
     }
 }

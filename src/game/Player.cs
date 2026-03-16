@@ -4,5 +4,8 @@ public class Player : Actor
     {
         SetSymbol('@');
         SetName("John Doe");
+
+        stats = new Stats();
+        stats.SetWeight(70);
     }
 }

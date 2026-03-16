@@ -3,6 +3,14 @@ public class Key : Entity, IPickupable, IUsable
     Entity locked;
     public Entity Owner => locked;
 
+    public Key()
+    {
+        SetSymbol('k');
+
+        stats = new Stats();
+        stats.SetWeight(0.2);
+    }
+
     public void PickedUpBy(Actor actor)
     {
         actor.AddToInventory(this);
