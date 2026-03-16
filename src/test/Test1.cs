@@ -7,16 +7,18 @@ public class Test1 : Test
     public Test1()
     {
         grid = new Grid(10, 8);
-        new RoomBuilder(grid, grid.Origin, new Random(1));
+        new RoomBuilder(grid, grid.Origin);
 
         var spawn = grid.Origin;
         var playerBuild = new EntityBuilder<Player>(grid, spawn);
         var doorBuild   = new EntityBuilder<Door>(grid, spawn + (Point.Right * 4));
         var chestBuild  = new EntityBuilder<Container>(grid, spawn + (Point.Left * 3));
+        var ratBuild = new EntityBuilder<Rat>(grid, spawn + (Point.Up * 2) + (Point.Right * 2));
 
         var player = playerBuild.Build();
         var door = doorBuild.Build(overwrite: true);
         var chest = chestBuild.Build();
+        var rat = ratBuild.Build();
 
         var key = new Key();
         key.SetName("Silver Key");

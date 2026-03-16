@@ -8,7 +8,7 @@
 [Info] 'Steel Door' {9:4} is locked
           
  *-------*
- |       |
+ |     r |
  |       |
  |C     @D
  |       |
@@ -30,7 +30,7 @@
 [Info] 'John Doe' {3:4} placed 'Silver Key' {-,-} in their inventory
           
  *-------*
- |       |
+ |     r |
  |       |
  |C@     D
  |       |
@@ -51,7 +51,7 @@
 [Info] 'Steel Door' {9:4} is now open
           
  *-------*
- |       |
+ |     r |
  |       |
  |C     @D
  |       |

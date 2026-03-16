@@ -3,17 +3,15 @@ using System;
 public class RoomBuilder
 {
     Grid grid;
-    Random rng;
     int width;
     int depth;
 
-    public RoomBuilder(Grid grid, Point origin, Random rng)
+    public RoomBuilder(Grid grid, Point origin)
     {
         this.grid = grid;
-        this.rng = rng;
 
-        width = rng.Next(Config.roomMinWidth, Config.roomMaxWidth);
-        depth = rng.Next(Config.roomMinDepth, Config.roomMaxDepth);
+        width = RogueNET.RNG.Next(Config.roomMinWidth, Config.roomMaxWidth);
+        depth = RogueNET.RNG.Next(Config.roomMinDepth, Config.roomMaxDepth);
 
         FormatRoom(origin, width, depth);
     }

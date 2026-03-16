@@ -53,7 +53,7 @@ The outputs are embedded below for quick viewing.
 [Info] 'Steel Door' {9:4} is locked
           
  *-------*
- |       |
+ |     r |
  |       |
  |C     @D
  |       |
@@ -75,7 +75,7 @@ The outputs are embedded below for quick viewing.
 [Info] 'John Doe' {3:4} placed 'Silver Key' {-,-} in their inventory
           
  *-------*
- |       |
+ |     r |
  |       |
  |C@     D
  |       |
@@ -96,7 +96,7 @@ The outputs are embedded below for quick viewing.
 [Info] 'Steel Door' {9:4} is now open
           
  *-------*
- |       |
+ |     r |
  |       |
  |C     @D
  |       |
@@ -112,13 +112,14 @@ The outputs are embedded below for quick viewing.
 
 ```text
 
+
 -----------------------------------------
 [Info] 'John Doe' is moving from {5:4} to {4:4}
 [Info] 'John Doe' is moving from {4:4} to {3:4}
 [Info] 'John Doe' {3:4} path was blocked by 'Wooden Chest' {2:4}
           
  *-------*
- |       |
+ |     r |
  |       |
  |C@     D
  |       |
@@ -126,10 +127,10 @@ The outputs are embedded below for quick viewing.
  *-------*
 
 -----------------------------------------
-[Info] 'John Doe' {3:4} picked up 'Wooden Chest' {2:4} from 'Wooden Chest' {2:4}
+[Info] 'John Doe' {3:4} picked up 'Wooden Chest' {2:4}
           
  *-------*
- |       |
+ |     r |
  |       |
  | @     D
  |       |
@@ -140,22 +141,36 @@ The outputs are embedded below for quick viewing.
 [Info] 'John Doe' is moving from {3:4} to {4:4}
 [Info] 'John Doe' is moving from {4:4} to {5:4}
 [Info] 'John Doe' is moving from {5:4} to {6:4}
+[Info] 'John Doe' is moving from {6:4} to {7:4}
+[Info] 'John Doe' is moving from {7:4} to {7:3}
           
  *-------*
- |       |
- |       |
- |    @  D
+ |     r |
+ |     @ |
+ |       D
  |       |
  |       |
  *-------*
 
 -----------------------------------------
-[Info] 'John Doe' {6:4} put down the 'Wooden Chest' {2:4} he was carrying
+[Info] 'John Doe' {7:3} puts down the 'Wooden Chest' {2:4} he was carrying
+[Info] 'Rat' {7:2} (Female) died
+          
+ *-------*
+ |     C |
+ |     @ |
+ |       D
+ |       |
+ |       |
+ *-------*
+
+-----------------------------------------
+[Info] 'John Doe' {7:3} picked up 'Wooden Chest' {2:4}
           
  *-------*
  |       |
- |    C  |
- |    @  D
+ |     @ |
+ |       D
  |       |
  |       |
  *-------*

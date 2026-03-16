@@ -4,8 +4,11 @@ public abstract class Entity : EntityBase
     protected Point point;
     protected Stats stats;
 
+    Entity carry;
     bool isPlaced;
     Node Node => grid[point];
+    public Stats Stats => stats;
+    public Entity Carry => carry;
 
     public void SetStats(Stats stats)
     {
@@ -15,6 +18,33 @@ public abstract class Entity : EntityBase
     public virtual void SetGrid(Grid grid)
     {
         this.grid = grid;
+    }
+
+    public virtual void SetCarry(Entity entity)
+    {
+        carry = entity;
+    }
+
+    public void StepUp(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (!SetPosition(point.X, point.Y - 1))
+            {
+                break;
+            }
+        }
+    }
+
+    public void StepDown(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (!SetPosition(point.X, point.Y + 1))
+            {
+                break;
+            }
+        }
     }
 
     public void StepRight(int count)
@@ -77,15 +107,5 @@ public abstract class Entity : EntityBase
         {
             return $"{base.ToString()} {point}";
         }
-    }
-
-    public Entity GetBelow()
-    {
-        return grid[Node.Point].Owner;
-    }
-
-    public Entity GetAbove()
-    {
-        return grid[Node.Point].Owner;
     }
 }

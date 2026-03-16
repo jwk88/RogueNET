@@ -3,13 +3,11 @@ using System.Collections.Generic;
 public class Actor : Entity
 {
     List<Entity> inventory;
-    Entity carrying;
     Node Target(int xDir, int yDir) => grid[point + new Point(xDir, yDir)];
 
     public Actor()
     {
         inventory = new List<Entity>();
-        carrying = null;
     }
 
     public virtual void AddToInventory(Entity entity)
@@ -20,6 +18,7 @@ public class Actor : Entity
 
     public virtual void Interract(int xDir, int yDir)
     {
+        if (xDir == 0 && yDir == 0) return;
         var target = Target(xDir, yDir);
         if (target.Owner != null)
         {
@@ -41,6 +40,7 @@ public class Actor : Entity
 
     public virtual void Loot(int xDir, int yDir)
     {
+        if (xDir == 0 && yDir == 0) return;
         var node = Target(xDir, yDir);
         if (node.Owner == null)
         {
@@ -79,6 +79,7 @@ public class Actor : Entity
 
     public virtual void Pickup(int xDir, int yDir)
     {
+        if (xDir == 0 && yDir == 0) return;
         var target = Target(xDir, yDir);
         if (target.Owner == null)
         {
@@ -87,29 +88,43 @@ public class Actor : Entity
         }
 
         // TODO: strength vs weight check here later, so can't pickup walls and stuff
-        var below = target.Owner.GetBelow();
-        carrying = target.Owner;
+        SetCarry(target.Owner);
         target.SetOwner(null);
-        Log.Info($"{this} picked up {carrying} from {below}");
+        Log.Info($"{this} picked up {Carry}");
     }
 
     public virtual void Putdown(int xDir, int yDir)
     {
-        if (carrying == null)
+        if (xDir == 0 && yDir == 0) return;
+        if (Carry == null)
         {
             Log.Info($"{this} is not carrying anything to put down!");
             return;
         }
 
-        var target = Target(xDir, yDir);
-        if (target.Owner != null)
+        var node = Target(xDir, yDir);
+        var nodeOwner = node.Owner;
+        Log.Info($"{this} puts down the {Carry} he was carrying");
+        
+        if (nodeOwner != null)
         {
-             // TODO: place on top of another, then do weight checks of what happens etc
-             return;
+            var prevWeight = nodeOwner.Stats.WeightKG;
+            var carryWeight = Carry.Stats.WeightKG;
+            if (prevWeight >= carryWeight)
+            {
+                nodeOwner.SetCarry(Carry);
+            }
+            else
+            {
+                if (nodeOwner is Actor)
+                {
+                    Log.Info($"{nodeOwner} died");
+                }
+                node.SetOwner(null);
+                node.SetOwner(Carry);
+            }
         }
 
-        target.SetOwner(carrying);
-        carrying = null;
-        Log.Info($"{this} put down the {target.Owner} he was carrying");
+        SetCarry(null);
     }
 }

@@ -13,10 +13,14 @@ public class Test1b : Test1
         player.Pickup(-1, 0);
         console.Draw(grid);
 
-        player.StepRight(3);
+        player.StepRight(4);
+        player.StepUp(1);
         console.Draw(grid);
 
         player.Putdown(0, -1);
+        console.Draw(grid);
+
+        player.Pickup(0, -1);
         console.Draw(grid);
 
         var output = console.GetOutput();
