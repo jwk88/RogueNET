@@ -43,7 +43,66 @@ The outputs are embedded below for quick viewing.
 <summary>Test1 Output</summary>
 
 ```text
-(paste contents of Test1.txt here)
+
+-----------------------------------------
+[Info] 'John Doe' is moving from {5:4} to {6:4}
+[Info] 'John Doe' is moving from {6:4} to {7:4}
+[Info] 'John Doe' is moving from {7:4} to {8:4}
+[Info] 'John Doe' {8:4} path was blocked by 'Steel Door' {9:4}
+[Info] 'John Doe' {8:4} interracts with 'Steel Door' {9:4}
+[Info] 'Steel Door' {9:4} is locked
+          
+ *-------*
+ |       |
+ |       |
+ |C     @D
+ |       |
+ |       |
+ *-------*
+
+-----------------------------------------
+[Info] 'John Doe' is moving from {8:4} to {7:4}
+[Info] 'John Doe' is moving from {7:4} to {6:4}
+[Info] 'John Doe' is moving from {6:4} to {5:4}
+[Info] 'John Doe' is moving from {5:4} to {4:4}
+[Info] 'John Doe' is moving from {4:4} to {3:4}
+[Info] 'John Doe' {3:4} path was blocked by 'Wooden Chest' {2:4}
+[Info] 'John Doe' {3:4} tries to loot 'Wooden Chest' {2:4}
+[Info] 'Wooden Chest' {2:4} is closed!
+[Info] 'John Doe' {3:4} interracts with 'Wooden Chest' {2:4}
+[Info] 'Wooden Chest' {2:4} is now open
+[Info] 'John Doe' {3:4} tries to loot 'Wooden Chest' {2:4}
+[Info] 'John Doe' {3:4} placed 'Silver Key' {-,-} in their inventory
+          
+ *-------*
+ |       |
+ |       |
+ |C@     D
+ |       |
+ |       |
+ *-------*
+
+-----------------------------------------
+[Info] 'John Doe' is moving from {3:4} to {4:4}
+[Info] 'John Doe' is moving from {4:4} to {5:4}
+[Info] 'John Doe' is moving from {5:4} to {6:4}
+[Info] 'John Doe' is moving from {6:4} to {7:4}
+[Info] 'John Doe' is moving from {7:4} to {8:4}
+[Info] 'John Doe' {8:4} path was blocked by 'Steel Door' {9:4}
+[Info] 'John Doe' {8:4} uses 'Silver Key' {-,-} on 'Steel Door' {9:4}
+[Info] 'Steel Door' {9:4} was owned by 'Steel Door Handle' {-,-}
+[Info] 'John Doe' {8:4} used 'Silver Key' {-,-} to open 'Steel Door Handle' {-,-} on 'Steel Door' {9:4}
+[Info] 'John Doe' {8:4} interracts with 'Steel Door' {9:4}
+[Info] 'Steel Door' {9:4} is now open
+          
+ *-------*
+ |       |
+ |       |
+ |C     @D
+ |       |
+ |       |
+ *-------*
+
 ```
 
 </details>
@@ -52,7 +111,55 @@ The outputs are embedded below for quick viewing.
 <summary>Test1b Output</summary>
 
 ```text
-(paste contents of Test1b.txt here)
+
+-----------------------------------------
+[Info] 'John Doe' is moving from {5:4} to {4:4}
+[Info] 'John Doe' is moving from {4:4} to {3:4}
+[Info] 'John Doe' {3:4} path was blocked by 'Wooden Chest' {2:4}
+          
+ *-------*
+ |       |
+ |       |
+ |C@     D
+ |       |
+ |       |
+ *-------*
+
+-----------------------------------------
+[Info] 'John Doe' {3:4} picked up 'Wooden Chest' {2:4} from 'Wooden Chest' {2:4}
+          
+ *-------*
+ |       |
+ |       |
+ | @     D
+ |       |
+ |       |
+ *-------*
+
+-----------------------------------------
+[Info] 'John Doe' is moving from {3:4} to {4:4}
+[Info] 'John Doe' is moving from {4:4} to {5:4}
+[Info] 'John Doe' is moving from {5:4} to {6:4}
+          
+ *-------*
+ |       |
+ |       |
+ |    @  D
+ |       |
+ |       |
+ *-------*
+
+-----------------------------------------
+[Info] 'John Doe' {6:4} put down the 'Wooden Chest' {2:4} he was carrying
+          
+ *-------*
+ |       |
+ |    C  |
+ |    @  D
+ |       |
+ |       |
+ *-------*
+
 ```
 
 </details>
