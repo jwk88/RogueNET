@@ -46,6 +46,6 @@ public class RogueNET
 
         var console = new ConsoleManager();
         var output = console.GetASCIIOnly(grid);
-        File.WriteAllText("game.txt", output);
+        File.WriteAllText("generated_dungeon_rooms.txt", output);
     }
 }
