@@ -14,12 +14,15 @@ public class RogueNET
         tests = new TestManager();
 
         var command = new Command(args);
-        if (command.Args[0].String == "test")
+        if (command.Args.Length > 0)
         {
-            var test = tests.Tests[command.Args[1].String];
-            var output = tests.RunTest(test);
-            Console.Clear();
-            Console.WriteLine(output);
+            if (command.Args[0].String == "test")
+            {
+                var test = tests.Tests[command.Args[1].String];
+                var output = tests.RunTest(test);
+                Console.Clear();
+                Console.WriteLine(output);
+            }
         }
     }
 }
