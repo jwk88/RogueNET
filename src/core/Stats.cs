@@ -8,7 +8,7 @@ public class Stats
 
     public Stats()
     {
-        weightKilograms = Config.entityDefaultWeightKG;
+        weightKilograms = Definitions.entityDefaultWeightKG;
     }
 
     public void SetWeight(double kilograms)

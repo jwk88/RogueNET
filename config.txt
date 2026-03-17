@@ -1,0 +1,6 @@
+Seed = 10
+GridWidth = 128
+GridDepth = 32
+RoomMinWidth = 24
+RoomMinDepth = 8
+RoomDiscardChance = 5

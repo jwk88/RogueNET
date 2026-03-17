@@ -16,8 +16,11 @@ public class CommandArg
         Boolean = null;
         Double = null;
 
-        if (bool.TryParse(value, out var b)) Boolean = b;
-        if (int.TryParse(value, out var i)) Integer = i;
-        if (double.TryParse(value, out var d)) Double = d;
+        if (int.TryParse(value, out var i)) 
+            Integer = i;
+        else if (double.TryParse(value, out var d)) 
+            Double = d;
+        else if (bool.TryParse(value, out var b)) 
+            Boolean = b;
     }
 }

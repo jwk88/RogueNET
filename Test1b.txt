@@ -1,4 +1,3 @@
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -8,7 +7,6 @@
  |           |
  *-----------*
 
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -19,7 +17,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {7:4} to {6:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -30,7 +27,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {6:4} to {5:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -41,7 +37,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {5:4} to {4:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -52,7 +47,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {4:4} to {3:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -63,7 +57,6 @@
  *-----------*
 
 [Info] 'John Doe' {3:4} path was blocked by 'Wooden Chest' {2:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -75,7 +68,6 @@
 
 [ACTION] PICK UP
 [Info] 'John Doe' {3:4} picked up 'Wooden Chest' {2:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -85,7 +77,6 @@
  |           |
  *-----------*
 
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -96,7 +87,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {3:4} to {4:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -107,7 +97,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {4:4} to {5:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -118,7 +107,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {5:4} to {6:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -129,7 +117,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {6:4} to {7:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -140,7 +127,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {7:4} to {8:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -151,7 +137,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {8:4} to {9:4}
--------Test 1B-------
               
  *-----------*
  |       r   |
@@ -162,7 +147,6 @@
  *-----------*
 
 [Info] 'John Doe' is moving from {9:4} to {9:3}
--------Test 1B-------
               
  *-----------*
  |       C   |
@@ -175,7 +159,6 @@
 [ACTION] PUT DOWN
 [Info] 'John Doe' {9:3} puts down the 'Wooden Chest' {2:4} he was carrying
 [Info] 'Rat' {9:2} (Female) died
--------Test 1B-------
               
  *-----------*
  |           |

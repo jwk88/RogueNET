@@ -16,7 +16,6 @@ public class ConsoleManager
     {
         Console.Clear();
         var frame = new StringBuilder();
-        frame.AppendLine($"-------{Title}-------");
 
         int depth = grid.Depth;
         int width = grid.Width;

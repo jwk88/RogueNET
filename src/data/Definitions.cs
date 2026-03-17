@@ -1,4 +1,4 @@
-public static class Config
+public static class Definitions
 {
     public const double entityDefaultWeightKG = 10;
 }

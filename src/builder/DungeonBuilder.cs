@@ -32,7 +32,7 @@ public class DungeonBuilder
     int margin;
     HashSet<RoomData> roomData = new HashSet<RoomData>();
 
-    public List<RoomData> GetRooms => roomData.ToList();
+    public List<RoomData> RoomsData => roomData.ToList();
 
     public DungeonBuilder(Grid grid, int minWidth = 10, int minDepth = 10, int margin = 2)
     {
@@ -114,5 +114,17 @@ public class DungeonBuilder
             Width = roomWidth,
             Depth = roomDepth
         });
+    }
+
+    public void DiscardRooms(int chance)
+    {
+        for (int i = 0; i < RoomsData.Count; i++)
+        {
+            var rng = RogueNET.RNG.Next(0, 100);
+            if (rng < chance)
+            {
+                RoomsData.RemoveAt(i);
+            }
+        }
     }
 }

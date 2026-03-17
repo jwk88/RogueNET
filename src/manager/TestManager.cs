@@ -9,6 +9,8 @@ public class TestManager
 
     public TestManager()
     {
+        RogueNET.RNG = new Random(1);
+
         tests = new Dictionary<string, Test>
         {
             { "Test1", new Test1() },
