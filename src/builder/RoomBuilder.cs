@@ -6,26 +6,25 @@ public class RoomBuilder
     int width;
     int depth;
 
-    public RoomBuilder(Grid grid, Point origin)
+    public RoomBuilder(Grid grid, Point origin, int width, int depth)
     {
         this.grid = grid;
+        this.width = width;
+        this.depth = depth;
 
-        width = RogueNET.RNG.Next(Config.roomMinWidth, Config.roomMaxWidth);
-        depth = RogueNET.RNG.Next(Config.roomMinDepth, Config.roomMaxDepth);
-
-        FormatRoom(origin, width, depth);
+        FormatRoom(origin);
     }
 
-    void FormatRoom(Point center, int width, int height)
+    void FormatRoom(Point center)
     {
         var xMin = center.X - (width / 2) + 1;
-        var yMin = center.Y - (height / 2) + 1;
+        var yMin = center.Y - (depth / 2) + 1;
         var xMax = center.X + (width / 2) - 1;
-        var yMax = center.Y + (height / 2) - 1;
+        var yMax = center.Y + (depth / 2) - 1;
 
-        for (int y = 0; y < Config.depth; y++)
+        for (int y = 0; y < grid.Depth; y++)
         {
-            for (int x = 0; x < Config.width; x++)
+            for (int x = 0; x < grid.Width; x++)
             {
                 var node = grid[x, y];
                 var p = node.Point;

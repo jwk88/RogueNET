@@ -13,10 +13,10 @@ public class Grid : IEnumerable<Node>
     public int Depth => depth;
     public Point Origin => origin;
 
-    public Grid()
+    public Grid(int width, int depth)
     {
-        width = Config.width;
-        depth = Config.depth;
+        this.width = width;
+        this.depth = depth;
 
         cells = new Node[width, depth];
         origin = new Point(width / 2, depth / 2);

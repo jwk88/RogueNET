@@ -18,8 +18,8 @@ public class ConsoleManager
         var frame = new StringBuilder();
         frame.AppendLine($"-------{Title}-------");
 
-        int depth = Config.depth;
-        int width = Config.width;
+        int depth = grid.Depth;
+        int width = grid.Width;
 
         for (int y = 0; y < depth; y++)
         {

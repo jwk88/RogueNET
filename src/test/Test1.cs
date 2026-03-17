@@ -4,10 +4,13 @@ public class Test1 : Test
 {
     public Player player { get; }
 
+    const int testWidth = 14;
+    const int testDepth = 8;
+
     public Test1()
     {
-        grid = new Grid();
-        new RoomBuilder(grid, grid.Origin);
+        grid = new Grid(testWidth, testDepth);
+        new RoomBuilder(grid, grid.Origin, testWidth, testDepth);
 
         var spawn = grid.Origin;
         var playerBuild = new EntityBuilder<Player>(grid, spawn);
