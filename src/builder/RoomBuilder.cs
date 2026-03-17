@@ -6,6 +6,16 @@ public class RoomBuilder
     int width;
     int depth;
 
+    public RoomBuilder(Grid grid, RoomData data)
+    {
+        this.grid = grid;
+        
+        width = data.Width;
+        depth = data.Depth;
+
+        FormatRoom(data.Origin);
+    }
+
     public RoomBuilder(Grid grid, Point origin, int width, int depth)
     {
         this.grid = grid;

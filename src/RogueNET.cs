@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 public class RogueNET
 {
@@ -19,10 +20,32 @@ public class RogueNET
             if (command.Args[0].String == "test")
             {
                 var test = tests.Tests[command.Args[1].String];
-                var output = tests.RunTest(test);
+                var testOutput = tests.RunTest(test);
                 Console.Clear();
-                Console.WriteLine(output);
+                Console.WriteLine(testOutput);
+            }
+            if (command.Args[0].String == "seed")
+            {
+                RNG = new Random(command.Args[1].Integer.Value);
             }
         }
+
+        var grid = new Grid(128, 64);
+        var dungeonBuilder = new DungeonBuilder(grid, minWidth: 24, minDepth: 8);
+        var rooms = dungeonBuilder.GetRooms;
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            var rng = RNG.Next(0, 100);
+            if (rng < 5)
+            {
+                rooms.RemoveAt(i);
+            }
+        }
+
+        foreach (var room in rooms) new RoomBuilder(grid, room);
+
+        var console = new ConsoleManager();
+        var output = console.GetASCIIOnly(grid);
+        File.WriteAllText("game.txt", output);
     }
 }

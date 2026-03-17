@@ -67,7 +67,7 @@ public class Test1 : Test
         player.Interract(1, 0);
         console.Draw(grid);
 
-        var output = console.GetOutput();
+        var output = console.GetFullOutput();
         return Validate(output, initialize);
     }
 }

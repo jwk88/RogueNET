@@ -23,7 +23,7 @@ public class Test1b : Test1
         player.Pickup(0, -1);
         console.Draw(grid);
 
-        var output = console.GetOutput();
+        var output = console.GetFullOutput();
         return Validate(output, initialize);
     }
 }
