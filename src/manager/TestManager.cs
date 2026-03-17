@@ -1,36 +1,44 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 public class TestManager
 {
-    List<Test> tests;
+    Dictionary<string, Test> tests;
+
+    public Dictionary<string,  Test> Tests => tests;
 
     public TestManager()
     {
-        tests = new List<Test>();
-        tests.Add(new Test1());
-        tests.Add(new Test1b());
+        tests = new Dictionary<string, Test>
+        {
+            { "Test1", new Test1() },
+            { "Test1b", new Test1b() }
+        };
     }
 
-    public void RunTests(bool initialize)
+    public void RunAllTests(bool initialize)
     {
         var testOutput = "";
         foreach (var test in tests)
         {
-            if (!test.Run(saveOutput: initialize))
-            {
-                throw new Exception($"{test} FAILED!");
-            }
-            else
-            {
-                testOutput += test.ToString() + " passed, OK" + "\n";
-            }
+            testOutput += RunTest(test.Value, initialize);
         }
 
         Console.Clear();
         Console.WriteLine(testOutput);
         Console.WriteLine("Tests passed, press any key to continue");
         Console.ReadKey();
+    }
+
+    public string RunTest(Test test, bool initialize = false)
+    {
+        if (!test.Run(saveOutput: initialize))
+        {
+            throw new Exception($"{test} FAILED!");
+        }
+        else
+        {
+            return test.ToString() + " passed, OK" + "\n";
+        }
     }
 }
