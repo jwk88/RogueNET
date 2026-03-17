@@ -45,64 +45,401 @@ The outputs are embedded below for quick viewing.
 
 ```text
 
------------------------------------------
-[Info] 'John Doe' is moving from {5:4} to {6:4}
-[Info] 'John Doe' is moving from {6:4} to {7:4}
-[Info] 'John Doe' is moving from {7:4} to {8:4}
-[Info] 'John Doe' {8:4} path was blocked by 'Steel Door' {9:4}
-[Info] 'John Doe' {8:4} interracts with 'Steel Door' {9:4}
-[Info] 'Steel Door' {9:4} is locked
-          
- *-------*
- |     r |
- |       |
- |C     @D
- |       |
- |       |
- *-------*
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C    @     D
+ |           |
+ |           |
+ *-----------*
 
------------------------------------------
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C     @    D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {7:4} to {8:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C      @   D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {8:4} to {9:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C       @  D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {9:4} to {10:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C        @ D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {10:4} to {11:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C         @D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {11:4} to {12:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C         @D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' {12:4} path was blocked by 'Steel Door' {13:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C         @D
+ |           |
+ |           |
+ *-----------*
+
+[ACTION] INTERRACT
+[Info] 'John Doe' {12:4} interracts with 'Steel Door' {13:4}
+[Info] 'Steel Door' {13:4} is locked
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C         @D
+ |           |
+ |           |
+ *-----------*
+
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C        @ D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {12:4} to {11:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C       @  D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {11:4} to {10:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C      @   D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {10:4} to {9:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C     @    D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {9:4} to {8:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C    @     D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {8:4} to {7:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C   @      D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {7:4} to {6:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C  @       D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {6:4} to {5:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C @        D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {5:4} to {4:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C@         D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {4:4} to {3:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C@         D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' {3:4} path was blocked by 'Wooden Chest' {2:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C@         D
+ |           |
+ |           |
+ *-----------*
+
+[ACTION] LOOT
 [Info] 'John Doe' {3:4} tries to loot 'Wooden Chest' {2:4}
 [Info] 'Wooden Chest' {2:4} is closed!
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C@         D
+ |           |
+ |           |
+ *-----------*
+
+[ACTION] INTERRACT
 [Info] 'John Doe' {3:4} interracts with 'Wooden Chest' {2:4}
 [Info] 'Wooden Chest' {2:4} is now open
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C@         D
+ |           |
+ |           |
+ *-----------*
+
+[ACTION] LOOT
 [Info] 'John Doe' {3:4} tries to loot 'Wooden Chest' {2:4}
 [Info] 'John Doe' {3:4} placed 'Silver Key' {-,-} in their inventory
-          
- *-------*
- |     r |
- |       |
- |C@     D
- |       |
- |       |
- *-------*
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C@         D
+ |           |
+ |           |
+ *-----------*
 
------------------------------------------
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C @        D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {3:4} to {4:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C  @       D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {4:4} to {5:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C   @      D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {5:4} to {6:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C    @     D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {6:4} to {7:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C     @    D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {7:4} to {8:4}
-[Info] 'John Doe' {8:4} path was blocked by 'Steel Door' {9:4}
-[Info] 'John Doe' {8:4} uses 'Silver Key' {-,-} on 'Steel Door' {9:4}
-[Info] 'Steel Door' {9:4} was owned by 'Steel Door Handle' {-,-}
-[Info] 'John Doe' {8:4} used 'Silver Key' {-,-} to open 'Steel Door Handle' {-,-} on 'Steel Door' {9:4}
-[Info] 'John Doe' {8:4} interracts with 'Steel Door' {9:4}
-[Info] 'Steel Door' {9:4} is now open
-          
- *-------*
- |     r |
- |       |
- |C     @D
- |       |
- |       |
- *-------*
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C      @   D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {8:4} to {9:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C       @  D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {9:4} to {10:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C        @ D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {10:4} to {11:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C         @D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {11:4} to {12:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C         @D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' {12:4} path was blocked by 'Steel Door' {13:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C         @D
+ |           |
+ |           |
+ *-----------*
+
+[ACTION] USE ITEM
+[Info] 'John Doe' {12:4} uses 'Silver Key' {-,-} on 'Steel Door' {13:4}
+[Info] 'Steel Door' {13:4} was owned by 'Steel Door Handle' {-,-}
+[Info] 'John Doe' {12:4} used 'Silver Key' {-,-} to open 'Steel Door Handle' {-,-} on 'Steel Door' {13:4}
+-------Test 1-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C         @D
+ |           |
+ |           |
+ *-----------*
+
+[ACTION] INTERRACT
+[Info] 'John Doe' {12:4} interracts with 'Steel Door' {13:4}
+[Info] 'Steel Door' {13:4} is now open
 
 ```
 
@@ -112,70 +449,195 @@ The outputs are embedded below for quick viewing.
 <summary>Test1b Output</summary>
 
 ```text
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C    @     D
+ |           |
+ |           |
+ *-----------*
 
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C   @      D
+ |           |
+ |           |
+ *-----------*
 
------------------------------------------
+[Info] 'John Doe' is moving from {7:4} to {6:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C  @       D
+ |           |
+ |           |
+ *-----------*
+
+[Info] 'John Doe' is moving from {6:4} to {5:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C @        D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {5:4} to {4:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C@         D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {4:4} to {3:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |C@         D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' {3:4} path was blocked by 'Wooden Chest' {2:4}
-          
- *-------*
- |     r |
- |       |
- |C@     D
- |       |
- |       |
- *-------*
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ | @         D
+ |           |
+ |           |
+ *-----------*
 
------------------------------------------
+[ACTION] PICK UP
 [Info] 'John Doe' {3:4} picked up 'Wooden Chest' {2:4}
-          
- *-------*
- |     r |
- |       |
- | @     D
- |       |
- |       |
- *-------*
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ | @         D
+ |           |
+ |           |
+ *-----------*
 
------------------------------------------
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |  @        D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {3:4} to {4:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |   @       D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {4:4} to {5:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |    @      D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {5:4} to {6:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |     @     D
+ |           |
+ |           |
+ *-----------*
+
 [Info] 'John Doe' is moving from {6:4} to {7:4}
-[Info] 'John Doe' is moving from {7:4} to {7:3}
-          
- *-------*
- |     r |
- |     @ |
- |       D
- |       |
- |       |
- *-------*
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |      @    D
+ |           |
+ |           |
+ *-----------*
 
------------------------------------------
-[Info] 'John Doe' {7:3} puts down the 'Wooden Chest' {2:4} he was carrying
-[Info] 'Rat' {7:2} (Female) died
-          
- *-------*
- |     C |
- |     @ |
- |       D
- |       |
- |       |
- *-------*
+[Info] 'John Doe' is moving from {7:4} to {8:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |           |
+ |       @   D
+ |           |
+ |           |
+ *-----------*
 
------------------------------------------
-[Info] 'John Doe' {7:3} picked up 'Wooden Chest' {2:4}
-          
- *-------*
- |       |
- |     @ |
- |       D
- |       |
- |       |
- *-------*
+[Info] 'John Doe' is moving from {8:4} to {9:4}
+-------Test 1B-------
+              
+ *-----------*
+ |       r   |
+ |       @   |
+ |           D
+ |           |
+ |           |
+ *-----------*
 
+[Info] 'John Doe' is moving from {9:4} to {9:3}
+-------Test 1B-------
+              
+ *-----------*
+ |       C   |
+ |       @   |
+ |           D
+ |           |
+ |           |
+ *-----------*
+
+[ACTION] PUT DOWN
+[Info] 'John Doe' {9:3} puts down the 'Wooden Chest' {2:4} he was carrying
+[Info] 'Rat' {9:2} (Female) died
+-------Test 1B-------
+              
+ *-----------*
+ |           |
+ |       @   |
+ |           D
+ |           |
+ |           |
+ *-----------*
+
+[ACTION] PICK UP
+[Info] 'John Doe' {9:3} picked up 'Wooden Chest' {2:4}
 ```
 
 </details>
