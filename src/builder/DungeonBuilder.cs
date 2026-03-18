@@ -159,13 +159,15 @@ public class DungeonBuilder
             var rNode = grid[room.Origin + (Point.Right * ((room.Width / 2) - 1))];
 
             var path = new List<Point>();
-            if (raycaster.CastUp(tNode.Point, ref path) != null)
+            var up = raycaster.CastUp(tNode.Point, ref path);
+            if (up != null && up is Wall)
             {
                 CreatePath(path, vertical: true);   
             }
-
             path.Clear();
-            if (raycaster.CastLeft(lNode.Point, ref path) != null)
+            
+            var left = raycaster.CastLeft(lNode.Point, ref path);
+            if (left != null && left is Wall)
             {
                 CreatePath(path, vertical: false);
             }
