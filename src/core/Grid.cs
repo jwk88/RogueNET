@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Grid : IEnumerable<Node>
 {
-    Node[,] cells;
+    Node[,] nodes;
     int width;
     int depth;
     Point origin;
@@ -18,13 +18,13 @@ public class Grid : IEnumerable<Node>
         this.width = width;
         this.depth = depth;
 
-        cells = new Node[width, depth];
+        nodes = new Node[width, depth];
         origin = new Point(width / 2, depth / 2);
         for (int y = 0; y < depth; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                cells[x, y] = new Node(x, y);
+                nodes[x, y] = new Node(x, y);
             }
         }
     }
@@ -42,7 +42,7 @@ public class Grid : IEnumerable<Node>
             if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
             if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
 
-            return cells[x, y];
+            return nodes[x, y];
         }
     }
 
@@ -56,23 +56,37 @@ public class Grid : IEnumerable<Node>
             if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
             if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
 
-            return cells[x, y];
+            return nodes[x, y];
         }
     }
 
-    public Point RightOf(Point point, int offsetX = 1)
+    public bool HasNeighbour<T>(Point center)
     {
-        return new Point(point.X + offsetX, point.Y);
-    }
+        for (int i = 0; i < 9; i++)
+        {
+            if (i == 4) continue;
 
-    public Point LeftOf(Point point, int offsetX = -1)
-    {
-        return new Point(point.X + offsetX, point.Y);
+            var xi = (i % 3) - 1;
+            var yi = (i / 3) - 1;
+
+            var x = xi + center.X;
+            var y = yi + center.Y;
+
+            var nPoint = new Point(x, y);
+            if (!IsInside(nPoint)) continue;
+            
+            var node = nodes[nPoint.X, nPoint.Y];
+            if (node.Owner is T)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public IEnumerator<Node> GetEnumerator()
     {
-        foreach (var cell in cells)
+        foreach (var cell in nodes)
         {
             yield return cell;
         }

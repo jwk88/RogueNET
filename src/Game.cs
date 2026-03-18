@@ -3,10 +3,35 @@ using System.IO;
 
 public class Game
 {
+    ConsoleManager console;
+    RuntimeConfig config;
+
     public Game(RuntimeConfig config)
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
+        console = new ConsoleManager();
+        this.config = config;
+        Console.Clear();
+        Console.Write(GenerateDungeon());
 
+        while (true)
+        {
+            var key = Console.ReadKey();
+            if (key.Key == ConsoleKey.Escape)
+            {
+                break;
+            }
+            if (key.Key == ConsoleKey.G)
+            {
+                config.Seed = RogueNET.RNG.Next(int.MinValue, int.MaxValue);
+                Console.Clear();
+                Console.Write(GenerateDungeon());
+            }
+        }
+    }
+
+    string GenerateDungeon()
+    {
         var width = config.GridWidth;
         var depth = config.GridDepth;
 
@@ -19,19 +44,8 @@ public class Game
         }
         builder.ConnectRooms();
 
-        var console = new ConsoleManager();
         var output = console.GetASCIIOnly(grid);
         File.WriteAllText("generated_dungeon_rooms.txt", output);
-
-        Console.Clear();
-        Console.Write(output);
-        while (true)
-        {
-            var key = Console.ReadKey();
-            if (key.Key == ConsoleKey.Escape)
-            {
-                break;
-            }
-        }
+        return output;
     }
 }

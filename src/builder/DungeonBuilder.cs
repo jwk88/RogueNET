@@ -128,23 +128,31 @@ public class DungeonBuilder
         }
     }
 
-    void CreatePath(List<Point> path, bool vertical)
+    void CreatePathway(List<Point> path, bool vertical)
     {
-        var i = 0;
         foreach (var entry in path)
         {
-            if (i == path.Count - 1)
-            {
-                break;
-            }
-
             var wall1 = new EntityBuilder<Wall>(grid, entry + (vertical ? Point.Right : Point.Up)).Build(true);
             wall1.SetSymbol(vertical ? Definitions.VerticalWall : Definitions.HorizontWall);
 
             var wall2 = new EntityBuilder<Wall>(grid, entry + (vertical ? Point.Left : Point.Down)).Build(true);
             wall2.SetSymbol(vertical ? Definitions.VerticalWall : Definitions.HorizontWall);
-            i++;
         }
+
+        new EntityBuilder<Door>(grid, path[0]).Build(true);
+        new EntityBuilder<Door>(grid, path[path.Count - 1]).Build(true);
+
+        var offset1 = vertical ? Point.Left : Point.Up;
+        var offset2 = vertical ? Point.Right : Point.Down;
+
+        new EntityBuilder<Corner>(grid, path[0] + offset1).Build(true).SetSymbol(Definitions.BotRightWall);
+        new EntityBuilder<Corner>(grid, path[0] + offset2).Build(true).SetSymbol(vertical ? Definitions.BotLeftCWall : Definitions.TopRightWall);
+
+        offset1 = vertical ? Point.Left : Point.Up;
+        offset2 = vertical ? Point.Right : Point.Down;
+
+        new EntityBuilder<Corner>(grid, path[path.Count - 1] + offset1).Build(true).SetSymbol(vertical ? Definitions.TopRightWall : Definitions.BotLeftCWall);
+        new EntityBuilder<Corner>(grid, path[path.Count - 1] + offset2).Build(true).SetSymbol(Definitions.TopLeftCWall);
     }
 
     public void ConnectRooms()
@@ -162,51 +170,27 @@ public class DungeonBuilder
             var up = raycaster.CastUp(tNode.Point, ref path);
             if (up != null && up is Wall)
             {
-                CreatePath(path, vertical: true);   
+                var last = path[path.Count - 1];
+                if (!grid.HasNeighbour<Corner>(last))
+                {
+                    path.Insert(0, tNode.Point);
+                    CreatePathway(path, vertical: true);
+                }
             }
+
             path.Clear();
             
             var left = raycaster.CastLeft(lNode.Point, ref path);
             if (left != null && left is Wall)
             {
-                CreatePath(path, vertical: false);
+                var last = path[path.Count - 1];
+                if (!grid.HasNeighbour<Corner>(last))
+                {
+                    path.Insert(0, lNode.Point);
+                    CreatePathway(path, vertical: false);
+                }
             }
-
             path.Clear();
-            // raycaster.CastDown(bNode.Point, ref path);
-            // raycaster.CastRight(rNode.Point, ref path);
         }
     }
-
-    // public void SaveForLater()
-    // {
-    //     // var cornerLeft = start + Point.Left;
-    //     // var cornerRight = start + Point.Right;
-
-    //     // var leftBuild = new EntityBuilder<Corner>(grid, cornerLeft).Build(overwrite: true);
-    //     // var rightBuild = new EntityBuilder<Corner>(grid, cornerRight).Build(overwrite: true);
-
-    //     // leftBuild.SetSymbol(Definitions.BotRightWall);
-    //     // rightBuild.SetSymbol(Definitions.BotLeftCWall);
-
-    //     // new EntityBuilder<Door>(grid, start).Build(overwrite: true);
-    //     var i = 0;
-    //     foreach (var entry in path)
-    //     {
-    //         if (i == path.Count - 1)
-    //         {
-    //             // cornerLeft = entry + Point.Left;
-    //             // cornerRight = entry + Point.Right;
-
-    //             // leftBuild = new EntityBuilder<Corner>(grid, cornerLeft).Build(overwrite: true);
-    //             // rightBuild = new EntityBuilder<Corner>(grid, cornerRight).Build(overwrite: true);
-
-    //             // leftBuild.SetSymbol(Definitions.TopRightWall);
-    //             // rightBuild.SetSymbol(Definitions.TopLeftCWall);
-
-    //             // new EntityBuilder<Door>(grid, entry).Build(overwrite: true);
-    //             break;
-    //         }
-    //     }
-    // }
 }
