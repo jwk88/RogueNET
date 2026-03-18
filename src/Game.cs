@@ -15,6 +15,7 @@ public class Game
         {
             new RoomBuilder(grid, room);
         }
+        builder.ConnectRooms();
 
         var console = new ConsoleManager();
         var output = console.GetASCIIOnly(grid);

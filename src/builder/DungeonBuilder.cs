@@ -127,4 +127,42 @@ public class DungeonBuilder
             }
         }
     }
+
+    public void ConnectRooms()
+    {
+        foreach (var room in RoomsData)
+        {
+            var tNode = grid[room.Origin + (Point.Up    * ((room.Depth / 2) - 1))];
+            var bNode = grid[room.Origin + (Point.Down  * ((room.Depth / 2) - 1))];
+            var lNode = grid[room.Origin + (Point.Left  * ((room.Width / 2) - 1))];
+            var rNode = grid[room.Origin + (Point.Right * ((room.Width / 2) - 1))];
+
+            var tPoint = tNode.Point;
+            var path = new HashSet<Point>();
+            var clear = true;
+            for (int y = tPoint.Y - 1; y >= 0; y--)
+            {
+                var probe = grid[tPoint.X, y];
+                if (probe.Owner != null)
+                {
+                    if (probe.Owner is Wall)
+                    {
+                        clear = false;
+                        break;
+                    }
+                }
+                path.Add(probe.Point);
+            }
+            if (clear) path.Clear();
+
+            foreach (var entry in path)
+            {
+                var wall1 = new EntityBuilder<Wall>(grid, entry + Point.Right).Build();
+                wall1.SetSymbol('|');
+
+                var wall2 = new EntityBuilder<Wall>(grid, entry + Point.Left * margin).Build();
+                wall2.SetSymbol('|');
+            }
+        }
+    }
 }
