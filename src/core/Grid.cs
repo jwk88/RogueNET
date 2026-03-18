@@ -29,6 +29,12 @@ public class Grid : IEnumerable<Node>
         }
     }
 
+    public bool IsInside(Point p)
+    {
+        return p.X >= 0 && p.X < Width &&
+               p.Y >= 0 && p.Y < Depth;
+    }
+
     public Node this[int x, int y]
     {
         get

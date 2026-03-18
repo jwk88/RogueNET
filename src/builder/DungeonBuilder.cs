@@ -128,8 +128,29 @@ public class DungeonBuilder
         }
     }
 
+    void CreatePath(List<Point> path, bool vertical)
+    {
+        var i = 0;
+        foreach (var entry in path)
+        {
+            if (i == path.Count - 1)
+            {
+                break;
+            }
+
+            var wall1 = new EntityBuilder<Wall>(grid, entry + (vertical ? Point.Right : Point.Up)).Build(true);
+            wall1.SetSymbol(vertical ? Definitions.VerticalWall : Definitions.HorizontWall);
+
+            var wall2 = new EntityBuilder<Wall>(grid, entry + (vertical ? Point.Left : Point.Down)).Build(true);
+            wall2.SetSymbol(vertical ? Definitions.VerticalWall : Definitions.HorizontWall);
+            i++;
+        }
+    }
+
     public void ConnectRooms()
     {
+        var raycaster = new Raycast(grid);
+
         foreach (var room in RoomsData)
         {
             var tNode = grid[room.Origin + (Point.Up    * ((room.Depth / 2) - 1))];
@@ -137,64 +158,53 @@ public class DungeonBuilder
             var lNode = grid[room.Origin + (Point.Left  * ((room.Width / 2) - 1))];
             var rNode = grid[room.Origin + (Point.Right * ((room.Width / 2) - 1))];
 
-            var tPoint = tNode.Point;
             var path = new List<Point>();
-            var clear = true;
-            for (int y = tPoint.Y - 1; y >= 0; y--)
+            if (raycaster.CastUp(tNode.Point, ref path) != null)
             {
-                var probe = grid[tPoint.X, y];
-                path.Add(probe.Point);
-                if (probe.Owner != null)
-                {
-                    if (probe.Owner is Wall)
-                    {
-                        clear = false;
-                        break;
-                    }
-                }
+                CreatePath(path, vertical: true);   
             }
-            if (clear)
+
+            path.Clear();
+            if (raycaster.CastLeft(lNode.Point, ref path) != null)
             {
-                path.Clear();
+                CreatePath(path, vertical: false);
             }
-            else
-            {
-                var cornerLeft = tPoint + Point.Left;
-                var cornerRight = tPoint + Point.Right;
 
-                var leftBuild = new EntityBuilder<Corner>(grid, cornerLeft).Build(overwrite: true);
-                var rightBuild = new EntityBuilder<Corner>(grid, cornerRight).Build(overwrite: true);
-
-                leftBuild.SetSymbol(Definitions.BotRightWall);
-                rightBuild.SetSymbol(Definitions.BotLeftCWall);
-
-                new EntityBuilder<Door>(grid, tPoint).Build(overwrite: true);
-                var i = 0;
-                foreach (var entry in path)
-                {
-                    if (i == path.Count - 1)
-                    {
-                        cornerLeft = entry + Point.Left;
-                        cornerRight = entry + Point.Right;
-
-                        leftBuild = new EntityBuilder<Corner>(grid, cornerLeft).Build(overwrite: true);
-                        rightBuild = new EntityBuilder<Corner>(grid, cornerRight).Build(overwrite: true);
-
-                        leftBuild.SetSymbol(Definitions.TopRightWall);
-                        rightBuild.SetSymbol(Definitions.TopLeftCWall);
-
-                        new EntityBuilder<Door>(grid, entry).Build(overwrite: true);
-                        break;    
-                    }
-
-                    var wall1 = new EntityBuilder<Wall>(grid, entry + Point.Right).Build();
-                    wall1.SetSymbol(Definitions.VerticalWall);
-
-                    var wall2 = new EntityBuilder<Wall>(grid, entry + Point.Left).Build();
-                    wall2.SetSymbol(Definitions.VerticalWall);
-                    i++;
-                }
-            }
+            path.Clear();
+            // raycaster.CastDown(bNode.Point, ref path);
+            // raycaster.CastRight(rNode.Point, ref path);
         }
     }
+
+    // public void SaveForLater()
+    // {
+    //     // var cornerLeft = start + Point.Left;
+    //     // var cornerRight = start + Point.Right;
+
+    //     // var leftBuild = new EntityBuilder<Corner>(grid, cornerLeft).Build(overwrite: true);
+    //     // var rightBuild = new EntityBuilder<Corner>(grid, cornerRight).Build(overwrite: true);
+
+    //     // leftBuild.SetSymbol(Definitions.BotRightWall);
+    //     // rightBuild.SetSymbol(Definitions.BotLeftCWall);
+
+    //     // new EntityBuilder<Door>(grid, start).Build(overwrite: true);
+    //     var i = 0;
+    //     foreach (var entry in path)
+    //     {
+    //         if (i == path.Count - 1)
+    //         {
+    //             // cornerLeft = entry + Point.Left;
+    //             // cornerRight = entry + Point.Right;
+
+    //             // leftBuild = new EntityBuilder<Corner>(grid, cornerLeft).Build(overwrite: true);
+    //             // rightBuild = new EntityBuilder<Corner>(grid, cornerRight).Build(overwrite: true);
+
+    //             // leftBuild.SetSymbol(Definitions.TopRightWall);
+    //             // rightBuild.SetSymbol(Definitions.TopLeftCWall);
+
+    //             // new EntityBuilder<Door>(grid, entry).Build(overwrite: true);
+    //             break;
+    //         }
+    //     }
+    // }
 }

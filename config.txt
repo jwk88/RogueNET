@@ -1,4 +1,4 @@
-Seed = 10
+Seed = 100
 GridWidth = 128
 GridDepth = 32
 RoomMinWidth = 24
