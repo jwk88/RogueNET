@@ -46,17 +46,21 @@ public class RoomBuilder
 
                 if ((p.X == xMin || p.X == xMax) && (p.Y == yMin || p.Y == yMax))
                 {
-                    new EntityBuilder<Corner>(grid, p).Build();
+                    var corner = new EntityBuilder<Corner>(grid, p).Build();
+                    if (p.X == xMin && p.Y == yMin) corner.SetSymbol(Definitions.TopLeftCWall);
+                    if (p.X == xMin && p.Y == yMax) corner.SetSymbol(Definitions.BotLeftCWall);
+                    if (p.X == xMax && p.Y == yMin) corner.SetSymbol(Definitions.TopRightWall);
+                    if (p.X == xMax && p.Y == yMax) corner.SetSymbol(Definitions.BotRightWall);
                 }
                 else if (p.X == xMin || p.X == xMax)
                 {
                     var vertical = new EntityBuilder<Wall>(grid, p).Build();
-                    vertical.SetSymbol('|');
+                    vertical.SetSymbol(Definitions.VerticalWall);
                 }
                 else if (p.Y == yMin || p.Y == yMax)
                 {
                     var horizontal = new EntityBuilder<Wall>(grid, p).Build();
-                    horizontal.SetSymbol('-');
+                    horizontal.SetSymbol(Definitions.HorizontWall);
                 }
             }
         }

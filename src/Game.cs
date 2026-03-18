@@ -5,6 +5,8 @@ public class Game
 {
     public Game(RuntimeConfig config)
     {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
         var width = config.GridWidth;
         var depth = config.GridDepth;
 
