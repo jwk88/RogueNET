@@ -12,7 +12,7 @@ The goal is a system where **gameplay emerges from logical composition rather th
 
 # Dungeon Generation (early)
 
-![preview](preview.gif)
+![preview](dungeon_gen_early.gif)
 
 # Example Gameplay Scenarios
 
