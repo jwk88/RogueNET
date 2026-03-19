@@ -15,6 +15,20 @@ public class Door : Entity, IInterractable
     {
         openable = (IOpenable)interractable;
         openable.SetOwner(this);
+
+        openable.OnOpen = () =>
+        {
+            if (grid.GetFirstEmptyNeighbour(Node.Point, out var neighbour))
+            {
+                Node.SetOwner(null);
+                neighbour.SetOwner(this);
+            }
+            else
+            {
+                Log.Info($"{this} had nowhere to move, it was destroyed!");
+                Node.SetOwner(null);
+            }
+        };
     }
 
     public void InteractedBy(Actor actor)

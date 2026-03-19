@@ -3,4 +3,4 @@ GridWidth = 128
 GridDepth = 32
 RoomMinWidth = 24
 RoomMinDepth = 8
-RoomDiscardChance = 5
+RoomDiscardChance = 0

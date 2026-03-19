@@ -8,9 +8,11 @@ public abstract class Entity : EntityBase
 
     Entity carry;
     bool isPlaced;
-    Node Node => grid[point];
+    Point direction;
+    protected Node Node => grid[point];
     public Stats Stats => stats;
     public Entity Carry => carry;
+    public Point Direction => direction;
 
     public void SetStats(Stats stats)
     {
@@ -25,6 +27,11 @@ public abstract class Entity : EntityBase
     public virtual void SetCarry(Entity entity)
     {
         carry = entity;
+    }
+
+    public void Step(Point direction)
+    {
+        SetPosition(Node.Point + direction);
     }
 
     public void StepUp(int count, Action onStep = null)
@@ -75,8 +82,8 @@ public abstract class Entity : EntityBase
         }
     }
 
-    public virtual bool SetPosition(int x, int y, bool overwrite = false) => SetPosition(new Point(x, y), overwrite);
-    public virtual bool SetPosition(Point point, bool overwrite = false)
+    public bool SetPosition(int x, int y, bool overwrite = false) => SetPosition(new Point(x, y), overwrite);
+    public bool SetPosition(Point point, bool overwrite = false)
     {
         var next = grid[point];
 
@@ -86,8 +93,10 @@ public abstract class Entity : EntityBase
             return false;
         }
 
+        Point prevPoint = Point.Zero;
         if (Node != null)
         {
+            prevPoint = Node.Point;
             Node.SetOwner(null);
         }
 
@@ -97,6 +106,7 @@ public abstract class Entity : EntityBase
         }
 
         this.point = point;
+        direction = point - prevPoint;
         Node.SetOwner(this);
         isPlaced = true;
         

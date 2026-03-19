@@ -62,6 +62,11 @@ public class RogueNET
             if (success)
             {
                 File.WriteAllText("config.txt", config.Serialize());
+                Console.WriteLine($"Successfully set '{field}'");
+            }
+            else
+            {
+                Console.WriteLine($"Failed to find setting '{field}'");
             }
             return true;
         }

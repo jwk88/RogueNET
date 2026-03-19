@@ -1,13 +1,18 @@
+using System;
+
 public class Handle : Entity, IOpenable
 {
     bool open;
     bool locked;
     Entity owner;
+    Action onOpen;
 
     public bool IsOpen => open;
     public bool IsLocked => locked;
 
     public Entity Owner => owner;
+
+    public Action OnOpen { get => onOpen; set => onOpen = value; }
 
     public Handle()
     {
@@ -19,7 +24,7 @@ public class Handle : Entity, IOpenable
 
     public void Inject(IInterractable interractable)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException("Tried to inject interractable to a Handle. This is not defined behaviour yet");
     }
 
     public void InteractedBy(Actor actor)
@@ -41,6 +46,7 @@ public class Handle : Entity, IOpenable
 
         Log.Info($"{Owner} is now open");
         open = true;
+        OnOpen?.Invoke();
     }
 
     public void Lock()

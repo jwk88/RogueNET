@@ -30,9 +30,9 @@ public class DungeonBuilder
     int minWidth;
     int minDepth;
     int margin;
-    HashSet<RoomData> roomData = new HashSet<RoomData>();
+    List<RoomData> roomData = new List<RoomData>();
 
-    public List<RoomData> RoomsData => roomData.ToList();
+    public List<RoomData> GetActiveRooms => roomData.Where(x => !x.Offline).ToList();
 
     public DungeonBuilder(Grid grid, int minWidth = 10, int minDepth = 10, int margin = 2)
     {
@@ -112,18 +112,21 @@ public class DungeonBuilder
         {
             Origin = new Point(centerX, centerY),
             Width = roomWidth,
-            Depth = roomDepth
+            Depth = roomDepth,
+            Offline = false,
         });
     }
 
     public void DiscardRooms(int chance)
     {
-        for (int i = 0; i < RoomsData.Count; i++)
+        for (int i = 0; i < roomData.Count; i++)
         {
             var rng = RogueNET.RNG.Next(0, 100);
             if (rng < chance)
             {
-                RoomsData.RemoveAt(i);
+                var data = roomData[i];
+                data.Offline = true;
+                roomData[i] = data;
             }
         }
     }
@@ -139,8 +142,16 @@ public class DungeonBuilder
             wall2.SetSymbol(vertical ? Definitions.VerticalWall : Definitions.HorizontWall);
         }
 
-        new EntityBuilder<Door>(grid, path[0]).Build(true);
-        new EntityBuilder<Door>(grid, path[path.Count - 1]).Build(true);
+        var door1 = new EntityBuilder<Door>(grid, path[0]).Build(true);
+        var door2 = new EntityBuilder<Door>(grid, path[path.Count - 1]).Build(true);
+
+        var handle1 = new Handle();
+        handle1.SetName("Door Handle");
+        door1.Inject(handle1);
+
+        var handle2 = new Handle();
+        handle2.SetName("Door Handle");
+        door2.Inject(handle2);
 
         var offset1 = vertical ? Point.Left : Point.Up;
         var offset2 = vertical ? Point.Right : Point.Down;
@@ -159,7 +170,7 @@ public class DungeonBuilder
     {
         var raycaster = new Raycast(grid);
 
-        foreach (var room in RoomsData)
+        foreach (var room in GetActiveRooms)
         {
             var tNode = grid[room.Origin + (Point.Up    * ((room.Depth / 2) - 1))];
             var bNode = grid[room.Origin + (Point.Down  * ((room.Depth / 2) - 1))];

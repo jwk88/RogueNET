@@ -27,11 +27,13 @@ public abstract class Serializable<T> where T : new()
     {
         var flags = BindingFlags.Public | BindingFlags.Public | BindingFlags.Instance;
         var fields = GetType().GetFields(flags);
+        var found = false;
         foreach (var field in fields)
         {
             var toLower = field.Name.ToLower();
             if (toLower == fieldName.ToLower())
             {
+                found = true;
                 try
                 {
                     if (value.IsInteger)
@@ -40,7 +42,6 @@ public abstract class Serializable<T> where T : new()
                         field.SetValue(this, value.Boolean.Value);
                     if (value.IsDouble)
                         field.SetValue(this, value.Double.Value);
-                    
                 }
                 catch
                 {
@@ -49,7 +50,7 @@ public abstract class Serializable<T> where T : new()
             }
         }
         
-        return true;
+        return found;
     }
 
     public static T Deserialize(string content)

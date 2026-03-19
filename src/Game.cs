@@ -5,47 +5,66 @@ public class Game
 {
     ConsoleManager console;
     RuntimeConfig config;
+    Grid grid;
+    DungeonBuilder dungeon;
+    Player player;
 
     public Game(RuntimeConfig config)
     {
+        this.config = config;
+
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         console = new ConsoleManager();
-        this.config = config;
+        GenerateDungeon();
+        
+        player = new EntityBuilder<Player>(grid, dungeon.GetActiveRooms[0].Origin).Build();
+
         Console.Clear();
-        Console.Write(GenerateDungeon());
+        Console.Write(console.GetASCIIOnly(grid));
 
         while (true)
         {
-            var key = Console.ReadKey();
+            var key = Console.ReadKey(true);
+
             if (key.Key == ConsoleKey.Escape)
-            {
                 break;
-            }
-            if (key.Key == ConsoleKey.G)
+
+            if (key.Key == ConsoleKey.RightArrow)
+                player.StepRight(1);
+
+            if (key.Key == ConsoleKey.LeftArrow)
+                player.StepLeft(1);
+
+            if (key.Key == ConsoleKey.DownArrow)
+                player.StepDown(1);
+
+            if (key.Key == ConsoleKey.UpArrow)
+                player.StepUp(1);
+            
+            if (key.Key == ConsoleKey.I)
+                player.Interract(player.Direction.X, player.Direction.Y);
+
+            Console.Clear();
+            Console.Write(console.GetASCIIOnly(grid));
+            while (Log.logs.Count > 0)
             {
-                config.Seed = RogueNET.RNG.Next(int.MinValue, int.MaxValue);
-                Console.Clear();
-                Console.Write(GenerateDungeon());
+                Console.WriteLine(Log.logs.Dequeue());
             }
         }
     }
 
-    string GenerateDungeon()
+    void GenerateDungeon()
     {
         var width = config.GridWidth;
         var depth = config.GridDepth;
 
-        var grid = new Grid(width, depth);
-        var builder = new DungeonBuilder(grid, minWidth: config.RoomMinWidth, minDepth: config.RoomMinDepth);
-        builder.DiscardRooms(config.RoomDiscardChance);
-        foreach (var room in builder.RoomsData)
+        grid = new Grid(width, depth);
+        dungeon = new DungeonBuilder(grid, minWidth: config.RoomMinWidth, minDepth: config.RoomMinDepth);
+        dungeon.DiscardRooms(config.RoomDiscardChance);
+        foreach (var room in dungeon.GetActiveRooms)
         {
             new RoomBuilder(grid, room);
         }
-        builder.ConnectRooms();
-
-        var output = console.GetASCIIOnly(grid);
-        File.WriteAllText("generated_dungeon_rooms.txt", output);
-        return output;
+        dungeon.ConnectRooms();
     }
 }

@@ -84,6 +84,31 @@ public class Grid : IEnumerable<Node>
         return false;
     }
 
+    public bool GetFirstEmptyNeighbour(Point center, out Node node)
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            if (i == 4) continue;
+
+            var xi = (i % 3) - 1;
+            var yi = (i / 3) - 1;
+
+            var x = xi + center.X;
+            var y = yi + center.Y;
+
+            var nPoint = new Point(x, y);
+            if (!IsInside(nPoint)) continue;
+            
+            node = nodes[nPoint.X, nPoint.Y];
+            if (node.Owner == null)
+            {
+                return true;
+            }
+        }
+        node = null;
+        return false;
+    }
+
     public IEnumerator<Node> GetEnumerator()
     {
         foreach (var cell in nodes)

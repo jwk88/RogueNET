@@ -5,6 +5,7 @@ public struct RoomData : IEquatable<RoomData>
     public Point Origin;
     public int Width;
     public int Depth;
+    public bool Offline;
 
     public bool Equals(RoomData other)
     {
