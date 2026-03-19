@@ -10,10 +10,6 @@ The goal is a system where **gameplay emerges from logical composition rather th
 
 ---
 
-# Dungeon Generation (early)
-
-![preview](dungeon_gen_early.gif)
-
 # Example Gameplay Scenarios
 
 ### Legend
@@ -608,6 +604,12 @@ The chain of gameplay emerges from modular behaviors:
 
 No direct scripting exists between the chest, key, or door.
 Each interaction resolves through the interfaces exposed by the entities involved.
+
+---
+
+# Dungeon Generation (early)
+
+![preview](dungeon_gen_early.gif)
 
 ---
 
