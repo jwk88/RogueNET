@@ -13,21 +13,32 @@ public class RogueNET
     {
         Console.Clear();
 
+        if (!File.Exists(configPath))
+        {
+            var dummy = new RuntimeConfig();
+            File.WriteAllText(configPath, dummy.Serialize());
+        }
+
         var configText = File.ReadAllText(configPath);
         config = Serializable<RuntimeConfig>.Deserialize(configText);
-
-        if (!HasRuntimeCommands(args))
+        if (args.Length == 0)
         {
             RNG = new Random(config.Seed);
             game = new Game(config);
+            return;
+        }
+
+        if (!ParseRuntimeCommands(args))
+        {
+            RNG = new Random(config.Seed);
+            game = new Game(config);
+            game.RunFromCLI();
         }
     }
 
-    bool HasRuntimeCommands(params string[] args)
+    bool ParseRuntimeCommands(params string[] args)
     {
         var command = new Command(args);
-        if (command.Args.Length == 0) return false;
-    
         var header = command.Args[0].String;
 
         if (header == "reset")  return ProcessDefaults(command);

@@ -1,26 +1,29 @@
 using System;
-using System.IO;
 
 public class Game
 {
     ConsoleManager console;
-    RuntimeConfig config;
-    Grid grid;
-    DungeonBuilder dungeon;
-    Player player;
+
+    public RuntimeConfig Config     { get; private set; }
+    public Grid Grid                { get; private set; }
+    public DungeonBuilder Dungeon   { get; private set; }
+    public Player Player            { get; private set; }
 
     public Game(RuntimeConfig config)
     {
-        this.config = config;
+        Config = config;
 
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         console = new ConsoleManager();
         GenerateDungeon();
         
-        player = new EntityBuilder<Player>(grid, dungeon.GetActiveRooms[0].Origin).Build();
+        Player = new EntityBuilder<Player>(Grid, Dungeon.GetActiveRooms[0].Origin).Build();
+    }
 
+    public void RunFromCLI()
+    {
         Console.Clear();
-        Console.Write(console.GetASCIIOnly(grid));
+        Console.Write(console.GetASCIIOnly(Grid));
 
         while (true)
         {
@@ -30,22 +33,22 @@ public class Game
                 break;
 
             if (key.Key == ConsoleKey.RightArrow)
-                player.StepRight(1);
+                Player.StepRight(1);
 
             if (key.Key == ConsoleKey.LeftArrow)
-                player.StepLeft(1);
+                Player.StepLeft(1);
 
             if (key.Key == ConsoleKey.DownArrow)
-                player.StepDown(1);
+                Player.StepDown(1);
 
             if (key.Key == ConsoleKey.UpArrow)
-                player.StepUp(1);
+                Player.StepUp(1);
             
             if (key.Key == ConsoleKey.I)
-                player.Interract(player.Direction.X, player.Direction.Y);
+                Player.Interract(Player.Direction.X, Player.Direction.Y);
 
             Console.Clear();
-            Console.Write(console.GetASCIIOnly(grid));
+            Console.Write(console.GetASCIIOnly(Grid));
             while (Log.logs.Count > 0)
             {
                 Console.WriteLine(Log.logs.Dequeue());
@@ -53,18 +56,24 @@ public class Game
         }
     }
 
+    public string GetState()
+    {
+        return console.GetASCIIOnly(Grid);
+    }
+
     void GenerateDungeon()
     {
-        var width = config.GridWidth;
-        var depth = config.GridDepth;
+        var width = Config.GridWidth;
+        var depth = Config.GridDepth;
 
-        grid = new Grid(width, depth);
-        dungeon = new DungeonBuilder(grid, minWidth: config.RoomMinWidth, minDepth: config.RoomMinDepth);
-        dungeon.DiscardRooms(config.RoomDiscardChance);
-        foreach (var room in dungeon.GetActiveRooms)
+        Grid = new Grid(width, depth);
+        Dungeon = new DungeonBuilder(Grid, minWidth: Config.RoomMinWidth, minDepth: Config.RoomMinDepth);
+        Dungeon.DiscardRooms(Config.RoomDiscardChance);
+        foreach (var room in Dungeon.GetActiveRooms)
         {
-            new RoomBuilder(grid, room);
+            new RoomBuilder(Grid, room);
         }
-        dungeon.ConnectRooms();
+
+        Dungeon.ConnectRooms();
     }
 }
