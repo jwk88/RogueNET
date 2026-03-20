@@ -1,32 +1,35 @@
-using System.IO;
-
-public abstract class Test
+namespace RogueNET
 {
-    protected Grid grid;
-    protected ConsoleManager console = new ConsoleManager();
+    using System.IO;
 
-    public abstract bool Run(bool saveOutput = false);
-
-    public bool Validate(string output, bool saveOutput = false)
+    public abstract class Test
     {
-        if (saveOutput)
+        protected Grid grid;
+        protected ConsoleManager console = new ConsoleManager();
+
+        public abstract bool Run(bool saveOutput = false);
+
+        public bool Validate(string output, bool saveOutput = false)
         {
-            File.WriteAllText($"{this}.txt", output);
-            return true;
-        }
-        else
-        {
-            var test = File.ReadAllText($"{this}.txt");
-            if (test == output)
+            if (saveOutput)
             {
+                File.WriteAllText($"{this}.txt", output);
                 return true;
             }
+            else
+            {
+                var test = File.ReadAllText($"{this}.txt");
+                if (test == output)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
-        return false;
-    }
 
-    public override string ToString()
-    {
-        return GetType().Name;
+        public override string ToString()
+        {
+            return GetType().Name;
+        }
     }
 }

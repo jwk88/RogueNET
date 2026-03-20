@@ -1,74 +1,78 @@
-using System.Collections.Generic;
-public class Raycast
+namespace RogueNET
 {
-    Grid grid;
+    using System.Collections.Generic;
 
-    public Raycast(Grid grid)
+    public class Raycast
     {
-        this.grid = grid;
-    }
+        Grid grid;
 
-    public Entity CastUp(Point point, ref List<Point> path)
-    {
-        for (int y = point.Y - 1; y >= 0; y--)
+        public Raycast(Grid grid)
         {
-            if (y < 0) break;
-            var probe = grid[point.X, y];
-            path.Add(probe.Point);
-            if (probe.Owner != null)
-            {
-                return probe.Owner;
-            }
+            this.grid = grid;
         }
 
-        return null;
-    }
-
-    public Entity CastDown(Point point, ref List<Point> path)
-    {
-        for (int y = point.Y + 1; y < grid.Depth; y++)
+        public Entity CastUp(Point point, ref List<Point> path)
         {
-            if (y >= grid.Depth) break;
-            var probe = grid[point.X, y];
-            path.Add(probe.Point);
-            if (probe.Owner != null)
+            for (int y = point.Y - 1; y >= 0; y--)
             {
-                return probe.Owner;
+                if (y < 0) break;
+                var probe = grid[point.X, y];
+                path.Add(probe.Point);
+                if (probe.Owner != null)
+                {
+                    return probe.Owner;
+                }
             }
+
+            return null;
         }
 
-        return null;
-    }
-
-    public Entity CastRight(Point point, ref List<Point> path)
-    {
-        for (int x = point.X + 1; x < grid.Width; x++)
+        public Entity CastDown(Point point, ref List<Point> path)
         {
-            if (x >= grid.Width) break;
-            var probe = grid[x, point.Y];
-            path.Add(probe.Point);
-            if (probe.Owner != null)
+            for (int y = point.Y + 1; y < grid.Depth; y++)
             {
-                return probe.Owner;
+                if (y >= grid.Depth) break;
+                var probe = grid[point.X, y];
+                path.Add(probe.Point);
+                if (probe.Owner != null)
+                {
+                    return probe.Owner;
+                }
             }
+
+            return null;
         }
 
-        return null;
-    }
-
-    public Entity CastLeft(Point point, ref List<Point> path)
-    {
-        for (int x = point.X - 1; x >= 0; x--)
+        public Entity CastRight(Point point, ref List<Point> path)
         {
-            if (x < 0) break;
-            var probe = grid[x, point.Y];
-            path.Add(probe.Point);
-            if (probe.Owner != null)
+            for (int x = point.X + 1; x < grid.Width; x++)
             {
-                return probe.Owner;
+                if (x >= grid.Width) break;
+                var probe = grid[x, point.Y];
+                path.Add(probe.Point);
+                if (probe.Owner != null)
+                {
+                    return probe.Owner;
+                }
             }
+
+            return null;
         }
 
-        return null;
+        public Entity CastLeft(Point point, ref List<Point> path)
+        {
+            for (int x = point.X - 1; x >= 0; x--)
+            {
+                if (x < 0) break;
+                var probe = grid[x, point.Y];
+                path.Add(probe.Point);
+                if (probe.Owner != null)
+                {
+                    return probe.Owner;
+                }
+            }
+
+            return null;
+        }
     }
 }

@@ -1,21 +1,24 @@
-public class Rat : Actor
+namespace RogueNET
 {
-    string gender;
-
-    public Rat()
+    public class Rat : Actor
     {
-        SetSymbol('r');
-        SetName("Rat");
+        string gender;
 
-        gender = RogueNET.RNG.Next(0, 100) < 50 ? "Male" : "Female";
+        public Rat()
+        {
+            SetSymbol('r');
+            SetName("Rat");
 
-        stats = new Stats();
-        if (gender == "Male") stats.SetWeightByBellCurve(0.45, 0.65);
-        if (gender == "Female") stats.SetWeightByBellCurve(0.35, 0.45);
-    }
+            gender = RogueNET.RNG.Next(0, 100) < 50 ? "Male" : "Female";
 
-    public override string ToString()
-    {
-        return $"{base.ToString()} ({gender})";
+            stats = new Stats();
+            if (gender == "Male") stats.SetWeightByBellCurve(0.45, 0.65);
+            if (gender == "Female") stats.SetWeightByBellCurve(0.35, 0.45);
+        }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()} ({gender})";
+        }
     }
 }

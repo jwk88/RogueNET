@@ -1,73 +1,76 @@
-using System;
-
-public class Test1 : Test
+namespace RogueNET
 {
-    public Player player { get; }
+    using System;
 
-    const int testWidth = 14;
-    const int testDepth = 8;
-
-    public Test1()
+    public class Test1 : Test
     {
-        grid = new Grid(testWidth, testDepth);
-        new RoomBuilder(grid, grid.Origin, testWidth, testDepth);
+        public Player player { get; }
 
-        var spawn = grid.Origin;
-        var playerBuild = new EntityBuilder<Player>(grid, spawn);
-        var doorBuild   = new EntityBuilder<Door>(grid, spawn + (Point.Right * 6));
-        var chestBuild  = new EntityBuilder<Container>(grid, spawn + (Point.Left * 5));
-        var ratBuild = new EntityBuilder<Rat>(grid, spawn + (Point.Up * 2) + (Point.Right * 2));
+        const int testWidth = 14;
+        const int testDepth = 8;
 
-        var player = playerBuild.Build();
-        var door = doorBuild.Build(overwrite: true);
-        var chest = chestBuild.Build();
-        var rat = ratBuild.Build();
+        public Test1()
+        {
+            grid = new Grid(testWidth, testDepth);
+            new RoomBuilder(grid, grid.Origin, testWidth, testDepth);
 
-        var key = new Key();
-        key.SetName("Silver Key");
+            var spawn = grid.Origin;
+            var playerBuild = new EntityBuilder<Player>(grid, spawn);
+            var doorBuild   = new EntityBuilder<Door>(grid, spawn + (Point.Right * 6));
+            var chestBuild  = new EntityBuilder<Container>(grid, spawn + (Point.Left * 5));
+            var ratBuild = new EntityBuilder<Rat>(grid, spawn + (Point.Up * 2) + (Point.Right * 2));
 
-        var handle1 = new Handle();
-        handle1.SetName("Steel Door Handle");
+            var player = playerBuild.Build();
+            var door = doorBuild.Build(overwrite: true);
+            var chest = chestBuild.Build();
+            var rat = ratBuild.Build();
 
-        var handle2 = new Handle();
-        handle1.LockWithKey(key);
-        handle2.SetName("Chest Lid");
+            var key = new Key();
+            key.SetName("Silver Key");
 
-        door.SetName("Steel Door");
-        chest.SetName("Wooden Chest");
+            var handle1 = new Handle();
+            handle1.SetName("Steel Door Handle");
 
-        door.Inject(handle1);
-        chest.Inject(handle2);
-        chest.SetContents(key);
+            var handle2 = new Handle();
+            handle1.LockWithKey(key);
+            handle2.SetName("Chest Lid");
 
-        this.player = player;
-        console.Title = "Test 1";
-    }
+            door.SetName("Steel Door");
+            chest.SetName("Wooden Chest");
 
-    public override bool Run(bool initialize = false)
-    {
-        player.StepRight(7, () => { console.Draw(grid); });
-        console.Draw(grid);
-        player.Interract(1, 0);
-        console.Draw(grid);
+            door.Inject(handle1);
+            chest.Inject(handle2);
+            chest.SetContents(key);
 
-        player.StepLeft(10, () => { console.Draw(grid); });
-        console.Draw(grid);
-        player.Loot(-1, 0);
-        console.Draw(grid);
-        player.Interract(-1, 0);
-        console.Draw(grid);
-        player.Loot(-1, 0);
-        console.Draw(grid);
+            this.player = player;
+            console.Title = "Test 1";
+        }
 
-        player.StepRight(12, () => { console.Draw(grid); });
-        console.Draw(grid);
-        player.UseItem(index: 0, 1, 0);
-        console.Draw(grid);
-        player.Interract(1, 0);
-        console.Draw(grid);
+        public override bool Run(bool initialize = false)
+        {
+            player.StepRight(7, () => { console.Draw(grid); });
+            console.Draw(grid);
+            player.Interract(1, 0);
+            console.Draw(grid);
 
-        var output = console.GetFullOutput();
-        return Validate(output, initialize);
+            player.StepLeft(10, () => { console.Draw(grid); });
+            console.Draw(grid);
+            player.Loot(-1, 0);
+            console.Draw(grid);
+            player.Interract(-1, 0);
+            console.Draw(grid);
+            player.Loot(-1, 0);
+            console.Draw(grid);
+
+            player.StepRight(12, () => { console.Draw(grid); });
+            console.Draw(grid);
+            player.UseItem(index: 0, 1, 0);
+            console.Draw(grid);
+            player.Interract(1, 0);
+            console.Draw(grid);
+
+            var output = console.GetFullOutput();
+            return Validate(output, initialize);
+        }
     }
 }

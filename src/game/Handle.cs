@@ -1,72 +1,75 @@
-using System;
-
-public class Handle : Entity, IOpenable
+namespace RogueNET
 {
-    bool open;
-    bool locked;
-    Entity owner;
-    Action onOpen;
+    using System;
 
-    public bool IsOpen => open;
-    public bool IsLocked => locked;
-
-    public Entity Owner => owner;
-
-    public Action OnOpen { get => onOpen; set => onOpen = value; }
-
-    public Handle()
+    public class Handle : Entity, IOpenable
     {
-        SetSymbol('h');
+        bool open;
+        bool locked;
+        Entity owner;
+        Action onOpen;
 
-        stats = new Stats();
-        stats.SetWeight(1);
-    }
+        public bool IsOpen => open;
+        public bool IsLocked => locked;
 
-    public void Inject(IInterractable interractable)
-    {
-        throw new NotImplementedException("Tried to inject interractable to a Handle. This is not defined behaviour yet");
-    }
+        public Entity Owner => owner;
 
-    public void InteractedBy(Actor actor)
-    {
-        Log.Info($"{actor} interracts with {Owner}");
+        public Action OnOpen { get => onOpen; set => onOpen = value; }
 
-        if (IsOpen)
+        public Handle()
         {
-            Log.Info($"{Owner} is now closed");
-            open = false;
-            return;
+            SetSymbol('h');
+
+            stats = new Stats();
+            stats.SetWeight(1);
         }
 
-        if (locked)
+        public void Inject(IInterractable interractable)
         {
-            Log.Info($"{Owner} is locked");
-            return;
+            throw new NotImplementedException("Tried to inject interractable to a Handle. This is not defined behaviour yet");
         }
 
-        Log.Info($"{Owner} is now open");
-        open = true;
-        OnOpen?.Invoke();
-    }
+        public void InteractedBy(Actor actor)
+        {
+            Log.Info($"{actor} interracts with {Owner}");
 
-    public void Lock()
-    {
-        locked = true;
-    }
+            if (IsOpen)
+            {
+                Log.Info($"{Owner} is now closed");
+                open = false;
+                return;
+            }
 
-    public void Unlock()
-    {
-        locked = false;
-    }
+            if (locked)
+            {
+                Log.Info($"{Owner} is locked");
+                return;
+            }
 
-    public void LockWithKey(IOwnable key)
-    {
-        locked = true;
-        key.SetOwner(this);
-    }
+            Log.Info($"{Owner} is now open");
+            open = true;
+            OnOpen?.Invoke();
+        }
 
-    public void SetOwner(Entity entity)
-    {
-        this.owner = entity;
+        public void Lock()
+        {
+            locked = true;
+        }
+
+        public void Unlock()
+        {
+            locked = false;
+        }
+
+        public void LockWithKey(IOwnable key)
+        {
+            locked = true;
+            key.SetOwner(this);
+        }
+
+        public void SetOwner(Entity entity)
+        {
+            this.owner = entity;
+        }
     }
 }

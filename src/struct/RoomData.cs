@@ -1,26 +1,29 @@
-using System;
-
-public struct RoomData : IEquatable<RoomData>
+namespace RogueNET
 {
-    public Point Origin;
-    public int Width;
-    public int Depth;
-    public bool Offline;
+    using System;
 
-    public bool Equals(RoomData other)
+    public struct RoomData : IEquatable<RoomData>
     {
-        return Origin == other.Origin &&
-               Width == other.Width &&
-               Depth == other.Depth;
-    }
+        public Point Origin;
+        public int Width;
+        public int Depth;
+        public bool Offline;
 
-    public override bool Equals(object obj)
-    {
-        return obj is RoomData other && Equals(other);
-    }
+        public bool Equals(RoomData other)
+        {
+            return Origin == other.Origin &&
+                   Width == other.Width &&
+                   Depth == other.Depth;
+        }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Origin, Width, Depth);
+        public override bool Equals(object obj)
+        {
+            return obj is RoomData other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Origin, Width, Depth);
+        }
     }
 }

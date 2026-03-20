@@ -1,124 +1,127 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-public class Grid : IEnumerable<Node>
+namespace RogueNET
 {
-    Node[,] nodes;
-    int width;
-    int depth;
-    Point origin;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
-    public int Width => width;
-    public int Depth => depth;
-    public Point Origin => origin;
-
-    public Grid(int width, int depth)
+    public class Grid : IEnumerable<Node>
     {
-        this.width = width;
-        this.depth = depth;
+        Node[,] nodes;
+        int width;
+        int depth;
+        Point origin;
 
-        nodes = new Node[width, depth];
-        origin = new Point(width / 2, depth / 2);
-        for (int y = 0; y < depth; y++)
+        public int Width => width;
+        public int Depth => depth;
+        public Point Origin => origin;
+
+        public Grid(int width, int depth)
         {
-            for (int x = 0; x < width; x++)
+            this.width = width;
+            this.depth = depth;
+
+            nodes = new Node[width, depth];
+            origin = new Point(width / 2, depth / 2);
+            for (int y = 0; y < depth; y++)
             {
-                nodes[x, y] = new Node(x, y);
+                for (int x = 0; x < width; x++)
+                {
+                    nodes[x, y] = new Node(x, y);
+                }
             }
         }
-    }
 
-    public bool IsInside(Point p)
-    {
-        return p.X >= 0 && p.X < Width &&
-               p.Y >= 0 && p.Y < Depth;
-    }
-
-    public Node this[int x, int y]
-    {
-        get
+        public bool IsInside(Point p)
         {
-            if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
-            if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
-
-            return nodes[x, y];
+            return p.X >= 0 && p.X < Width &&
+                   p.Y >= 0 && p.Y < Depth;
         }
-    }
 
-    public Node this[Point point]
-    {
-        get
+        public Node this[int x, int y]
         {
-            var x = point.X;
-            var y = point.Y;
+            get
+            {
+                if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
+                if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
 
-            if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
-            if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
-
-            return nodes[x, y];
+                return nodes[x, y];
+            }
         }
-    }
 
-    public bool HasNeighbour<T>(Point center)
-    {
-        for (int i = 0; i < 9; i++)
+        public Node this[Point point]
         {
-            if (i == 4) continue;
+            get
+            {
+                var x = point.X;
+                var y = point.Y;
 
-            var xi = (i % 3) - 1;
-            var yi = (i / 3) - 1;
+                if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
+                if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
 
-            var x = xi + center.X;
-            var y = yi + center.Y;
+                return nodes[x, y];
+            }
+        }
 
-            var nPoint = new Point(x, y);
-            if (!IsInside(nPoint)) continue;
+        public bool HasNeighbour<T>(Point center)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                if (i == 4) continue;
+
+                var xi = (i % 3) - 1;
+                var yi = (i / 3) - 1;
+
+                var x = xi + center.X;
+                var y = yi + center.Y;
+
+                var nPoint = new Point(x, y);
+                if (!IsInside(nPoint)) continue;
             
-            var node = nodes[nPoint.X, nPoint.Y];
-            if (node.Owner is T)
-            {
-                return true;
+                var node = nodes[nPoint.X, nPoint.Y];
+                if (node.Owner is T)
+                {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
-    }
 
-    public bool GetFirstEmptyNeighbour(Point center, out Node node)
-    {
-        for (int i = 0; i < 9; i++)
+        public bool GetFirstEmptyNeighbour(Point center, out Node node)
         {
-            if (i == 4) continue;
+            for (int i = 0; i < 9; i++)
+            {
+                if (i == 4) continue;
 
-            var xi = (i % 3) - 1;
-            var yi = (i / 3) - 1;
+                var xi = (i % 3) - 1;
+                var yi = (i / 3) - 1;
 
-            var x = xi + center.X;
-            var y = yi + center.Y;
+                var x = xi + center.X;
+                var y = yi + center.Y;
 
-            var nPoint = new Point(x, y);
-            if (!IsInside(nPoint)) continue;
+                var nPoint = new Point(x, y);
+                if (!IsInside(nPoint)) continue;
             
-            node = nodes[nPoint.X, nPoint.Y];
-            if (node.Owner == null)
+                node = nodes[nPoint.X, nPoint.Y];
+                if (node.Owner == null)
+                {
+                    return true;
+                }
+            }
+            node = null;
+            return false;
+        }
+
+        public IEnumerator<Node> GetEnumerator()
+        {
+            foreach (var cell in nodes)
             {
-                return true;
+                yield return cell;
             }
         }
-        node = null;
-        return false;
-    }
 
-    public IEnumerator<Node> GetEnumerator()
-    {
-        foreach (var cell in nodes)
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            yield return cell;
+            return GetEnumerator();
         }
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
     }
 }

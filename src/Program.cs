@@ -1,7 +1,12 @@
-﻿public class Program
+﻿namespace RogueNET
 {
-    // private static void Main(string[] args)
-    // {
-    //     RogueNET rogueNET = new RogueNET(args);
-    // }
+    public class Program
+    {
+        #if CONSOLE
+        private static void Main(string[] args)
+        {
+            RogueNET rogueNET = new RogueNET(args);
+        }
+        #endif
+    }
 }

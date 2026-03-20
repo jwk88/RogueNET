@@ -1,39 +1,42 @@
-using System;
-
-public class Stats
+namespace RogueNET
 {
-    double weightKilograms;
+    using System;
 
-    public double WeightKG => weightKilograms;
-
-    public Stats()
+    public class Stats
     {
-        weightKilograms = Definitions.entityDefaultWeightKG;
-    }
+        double weightKilograms;
 
-    public void SetWeight(double kilograms)
-    {
-        weightKilograms = kilograms;
-    }
+        public double WeightKG => weightKilograms;
 
-    public void SetWeightByBellCurve(double min, double max)
-    {
-        weightKilograms = RandomGaussian((float)min, (float)max);
-    }
-
-    public float RandomGaussian(float minValue = 0.0f, float maxValue = 1.0f)
-    {
-        float u, v, S;
-        do
+        public Stats()
         {
-            u = 2.0f * (float)RogueNET.RNG.NextDouble() - 1.0f;
-            v = 2.0f * (float)RogueNET.RNG.NextDouble() - 1.0f;
-            S = u * u + v * v;
+            weightKilograms = Definitions.entityDefaultWeightKG;
         }
-        while (S >= 1.0f);
-        float std = u * (float)Math.Sqrt(-2.0f * (float)Math.Log(S) / S);
-        float mean = (minValue + maxValue) / 2.0f;
-        float sigma = (maxValue - mean) / 3.0f;
-        return Math.Clamp(std * sigma + mean, minValue, maxValue);
+
+        public void SetWeight(double kilograms)
+        {
+            weightKilograms = kilograms;
+        }
+
+        public void SetWeightByBellCurve(double min, double max)
+        {
+            weightKilograms = RandomGaussian((float)min, (float)max);
+        }
+
+        public float RandomGaussian(float minValue = 0.0f, float maxValue = 1.0f)
+        {
+            float u, v, S;
+            do
+            {
+                u = 2.0f * (float)RogueNET.RNG.NextDouble() - 1.0f;
+                v = 2.0f * (float)RogueNET.RNG.NextDouble() - 1.0f;
+                S = u * u + v * v;
+            }
+            while (S >= 1.0f);
+            float std = u * (float)Math.Sqrt(-2.0f * (float)Math.Log(S) / S);
+            float mean = (minValue + maxValue) / 2.0f;
+            float sigma = (maxValue - mean) / 3.0f;
+            return Math.Clamp(std * sigma + mean, minValue, maxValue);
+        }
     }
 }

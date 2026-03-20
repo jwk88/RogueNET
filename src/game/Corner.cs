@@ -1,11 +1,14 @@
-public class Corner : Entity
+namespace RogueNET
 {
-    public Corner()
+    public class Corner : Entity
     {
-        SetSymbol('*');
-        SetName("Corner");
+        public Corner()
+        {
+            SetSymbol('*');
+            SetName("Corner");
 
-        stats = new Stats();
-        stats.SetWeight(double.MaxValue);
+            stats = new Stats();
+            stats.SetWeight(double.MaxValue);
+        }
     }
 }

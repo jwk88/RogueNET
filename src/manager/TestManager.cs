@@ -1,46 +1,49 @@
-using System;
-using System.Collections.Generic;
-
-public class TestManager
+namespace RogueNET
 {
-    Dictionary<string, Test> tests;
+    using System;
+    using System.Collections.Generic;
 
-    public Dictionary<string,  Test> Tests => tests;
-
-    public TestManager()
+    public class TestManager
     {
-        RogueNET.RNG = new Random(1);
+        Dictionary<string, Test> tests;
 
-        tests = new Dictionary<string, Test>
-        {
-            { "Test1", new Test1() },
-            { "Test1b", new Test1b() }
-        };
-    }
+        public Dictionary<string,  Test> Tests => tests;
 
-    public void RunAllTests(bool initialize)
-    {
-        var testOutput = "";
-        foreach (var test in tests)
+        public TestManager()
         {
-            testOutput += RunTest(test.Value, initialize);
+            RogueNET.RNG = new Random(1);
+
+            tests = new Dictionary<string, Test>
+            {
+                { "Test1", new Test1() },
+                { "Test1b", new Test1b() }
+            };
         }
 
-        Console.Clear();
-        Console.WriteLine(testOutput);
-        Console.WriteLine("Tests passed, press any key to continue");
-        Console.ReadKey();
-    }
+        public void RunAllTests(bool initialize)
+        {
+            var testOutput = "";
+            foreach (var test in tests)
+            {
+                testOutput += RunTest(test.Value, initialize);
+            }
 
-    public string RunTest(Test test, bool initialize = false)
-    {
-        if (!test.Run(saveOutput: initialize))
-        {
-            throw new Exception($"{test} FAILED!");
+            Console.Clear();
+            Console.WriteLine(testOutput);
+            Console.WriteLine("Tests passed, press any key to continue");
+            Console.ReadKey();
         }
-        else
+
+        public string RunTest(Test test, bool initialize = false)
         {
-            return test.ToString() + " passed, OK" + "\n";
+            if (!test.Run(saveOutput: initialize))
+            {
+                throw new Exception($"{test} FAILED!");
+            }
+            else
+            {
+                return test.ToString() + " passed, OK" + "\n";
+            }
         }
     }
 }

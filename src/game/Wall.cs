@@ -1,10 +1,13 @@
-public class Wall : Entity
+namespace RogueNET
 {
-    public Wall()
+    public class Wall : Entity
     {
-        SetName("Wall");
+        public Wall()
+        {
+            SetName("Wall");
 
-        stats = new Stats();
-        stats.SetWeight(double.MaxValue);
+            stats = new Stats();
+            stats.SetWeight(double.MaxValue);
+        }
     }
 }

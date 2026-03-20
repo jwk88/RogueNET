@@ -1,31 +1,34 @@
-using System;
-
-public class EntityBuilder<T> where T : Entity
+namespace RogueNET
 {
-    protected Grid grid;
-    protected Point point;
+    using System;
 
-    public EntityBuilder(Grid grid, Point point)
+    public class EntityBuilder<T> where T : Entity
     {
-        this.grid = grid;
-        this.point = point;
-    }
+        protected Grid grid;
+        protected Point point;
 
-    public virtual T Build(bool overwrite = false)
-    {
-        var entity = (Entity)Activator.CreateInstance(typeof(T));
-        var node = grid[point.X, point.Y];
-        if (node.Owner != null && !overwrite)
+        public EntityBuilder(Grid grid, Point point)
         {
-            var msg = "Tried to build entity on top of an existing entity";
-            msg += '\n' + "Current owner: " + node.Owner;
-            msg += '\n' + "Builder: " + typeof(T);
-            throw new InvalidOperationException(msg);
+            this.grid = grid;
+            this.point = point;
         }
 
-        entity.SetGrid(grid);
-        entity.SetPosition(point, overwrite);
+        public virtual T Build(bool overwrite = false)
+        {
+            var entity = (Entity)Activator.CreateInstance(typeof(T));
+            var node = grid[point.X, point.Y];
+            if (node.Owner != null && !overwrite)
+            {
+                var msg = "Tried to build entity on top of an existing entity";
+                msg += '\n' + "Current owner: " + node.Owner;
+                msg += '\n' + "Builder: " + typeof(T);
+                throw new InvalidOperationException(msg);
+            }
 
-        return (T)entity;
+            entity.SetGrid(grid);
+            entity.SetPosition(point, overwrite);
+
+            return (T)entity;
+        }
     }
 }

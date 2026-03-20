@@ -1,11 +1,14 @@
-public class Ground : Entity
+namespace RogueNET
 {
-    public Ground()
+    public class Ground : Entity
     {
-        SetSymbol('.');
-        SetName("Ground");
+        public Ground()
+        {
+            SetSymbol('.');
+            SetName("Ground");
 
-        stats = new Stats();
-        stats.SetWeight(double.MaxValue);
+            stats = new Stats();
+            stats.SetWeight(double.MaxValue);
+        }
     }
 }

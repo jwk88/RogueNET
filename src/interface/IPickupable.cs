@@ -1,4 +1,7 @@
-public interface IPickupable
+namespace RogueNET
 {
-    public void PickedUpBy(Actor actor);
+    public interface IPickupable
+    {
+        public void PickedUpBy(Actor actor);
+    }
 }

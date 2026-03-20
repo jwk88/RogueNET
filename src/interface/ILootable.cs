@@ -1,4 +1,7 @@
-public interface ILootable
+namespace RogueNET
 {
-    public void LootFor(Actor actor);
+    public interface ILootable
+    {
+        public void LootFor(Actor actor);
+    }
 }

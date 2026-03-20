@@ -1,5 +1,8 @@
-public interface IInterractable
+namespace RogueNET
 {
-    public void Inject(IInterractable interractable);
-    public void InteractedBy(Actor actor);
+    public interface IInterractable
+    {
+        public void Inject(IInterractable interractable);
+        public void InteractedBy(Actor actor);
+    }
 }

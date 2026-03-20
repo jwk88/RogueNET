@@ -1,11 +1,14 @@
-public class Player : Actor
+namespace RogueNET
 {
-    public Player()
+    public class Player : Actor
     {
-        SetSymbol('@');
-        SetName("John Doe");
+        public Player()
+        {
+            SetSymbol('@');
+            SetName("John Doe");
 
-        stats = new Stats();
-        stats.SetWeight(70);
+            stats = new Stats();
+            stats.SetWeight(70);
+        }
     }
 }
