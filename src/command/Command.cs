@@ -1,38 +1,35 @@
-namespace RogueNET
+public class Command
 {
-    public class Command
+    public CommandArg[] Args;
+    public int Length;
+
+    public Command(params string[] args)
     {
-        public CommandArg[] Args;
-        public int Length;
+        Length = args.Length;
+        Args = new CommandArg[Length];
 
-        public Command(params string[] args)
+        for (int i = 0; i < Length; i++)
         {
-            Length = args.Length;
-            Args = new CommandArg[Length];
-
-            for (int i = 0; i < Length; i++)
-            {
-                Args[i] = new CommandArg(args[i]);
-            }
+            Args[i] = new CommandArg(args[i]);
         }
+    }
 
-        public override string ToString()
+    public override string ToString()
+    {
+        var command = "";
+        foreach (var arg in Args)
         {
-            var command = "";
-            foreach (var arg in Args)
-            {
-                if (arg.IsBool)
-                    command += "Boolean: " + arg.Boolean.Value;
-                else if (arg.IsInteger)
-                    command += "Integer: " + arg.Integer.Value;
-                else if (arg.IsDouble)
-                    command += "Double: " + arg.Double.Value;
-                else
-                    command += "String: " + arg.String;
+            if (arg.IsBool)
+                command += "Boolean: " + arg.Boolean.Value;
+            else if (arg.IsInteger)
+                command += "Integer: " + arg.Integer.Value;
+            else if (arg.IsDouble)
+                command += "Double: " + arg.Double.Value;
+            else
+                command += "String: " + arg.String;
 
-                command += " ";
-            }
-            return command;
+            command += " ";
         }
+        return command;
     }
 }

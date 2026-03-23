@@ -1,127 +1,124 @@
-namespace RogueNET
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Grid : IEnumerable<Node>
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
+    Node[,] nodes;
+    int width;
+    int depth;
+    Point origin;
 
-    public class Grid : IEnumerable<Node>
+    public int Width => width;
+    public int Depth => depth;
+    public Point Origin => origin;
+
+    public Grid(int width, int depth)
     {
-        Node[,] nodes;
-        int width;
-        int depth;
-        Point origin;
+        this.width = width;
+        this.depth = depth;
 
-        public int Width => width;
-        public int Depth => depth;
-        public Point Origin => origin;
-
-        public Grid(int width, int depth)
+        nodes = new Node[width, depth];
+        origin = new Point(width / 2, depth / 2);
+        for (int y = 0; y < depth; y++)
         {
-            this.width = width;
-            this.depth = depth;
-
-            nodes = new Node[width, depth];
-            origin = new Point(width / 2, depth / 2);
-            for (int y = 0; y < depth; y++)
+            for (int x = 0; x < width; x++)
             {
-                for (int x = 0; x < width; x++)
-                {
-                    nodes[x, y] = new Node(x, y);
-                }
+                nodes[x, y] = new Node(x, y);
             }
         }
+    }
 
-        public bool IsInside(Point p)
+    public bool IsInside(Point p)
+    {
+        return p.X >= 0 && p.X < Width &&
+               p.Y >= 0 && p.Y < Depth;
+    }
+
+    public Node this[int x, int y]
+    {
+        get
         {
-            return p.X >= 0 && p.X < Width &&
-                   p.Y >= 0 && p.Y < Depth;
+            if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
+            if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
+
+            return nodes[x, y];
         }
+    }
 
-        public Node this[int x, int y]
+    public Node this[Point point]
+    {
+        get
         {
-            get
-            {
-                if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
-                if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
+            var x = point.X;
+            var y = point.Y;
 
-                return nodes[x, y];
-            }
+            if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
+            if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
+
+            return nodes[x, y];
         }
+    }
 
-        public Node this[Point point]
+    public bool HasNeighbour<T>(Point center)
+    {
+        for (int i = 0; i < 9; i++)
         {
-            get
-            {
-                var x = point.X;
-                var y = point.Y;
+            if (i == 4) continue;
 
-                if (x < 0 || x >= width) throw new InvalidOperationException("Out of bounds, check walls");
-                if (y < 0 || y >= depth) throw new InvalidOperationException("Out of bounds, check walls");
+            var xi = (i % 3) - 1;
+            var yi = (i / 3) - 1;
 
-                return nodes[x, y];
-            }
-        }
+            var x = xi + center.X;
+            var y = yi + center.Y;
 
-        public bool HasNeighbour<T>(Point center)
-        {
-            for (int i = 0; i < 9; i++)
-            {
-                if (i == 4) continue;
-
-                var xi = (i % 3) - 1;
-                var yi = (i / 3) - 1;
-
-                var x = xi + center.X;
-                var y = yi + center.Y;
-
-                var nPoint = new Point(x, y);
-                if (!IsInside(nPoint)) continue;
+            var nPoint = new Point(x, y);
+            if (!IsInside(nPoint)) continue;
             
-                var node = nodes[nPoint.X, nPoint.Y];
-                if (node.Owner is T)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public bool GetFirstEmptyNeighbour(Point center, out Node node)
-        {
-            for (int i = 0; i < 9; i++)
+            var node = nodes[nPoint.X, nPoint.Y];
+            if (node.Owner is T)
             {
-                if (i == 4) continue;
+                return true;
+            }
+        }
+        return false;
+    }
 
-                var xi = (i % 3) - 1;
-                var yi = (i / 3) - 1;
+    public bool GetFirstEmptyNeighbour(Point center, out Node node)
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            if (i == 4) continue;
 
-                var x = xi + center.X;
-                var y = yi + center.Y;
+            var xi = (i % 3) - 1;
+            var yi = (i / 3) - 1;
 
-                var nPoint = new Point(x, y);
-                if (!IsInside(nPoint)) continue;
+            var x = xi + center.X;
+            var y = yi + center.Y;
+
+            var nPoint = new Point(x, y);
+            if (!IsInside(nPoint)) continue;
             
-                node = nodes[nPoint.X, nPoint.Y];
-                if (node.Owner == null)
-                {
-                    return true;
-                }
-            }
-            node = null;
-            return false;
-        }
-
-        public IEnumerator<Node> GetEnumerator()
-        {
-            foreach (var cell in nodes)
+            node = nodes[nPoint.X, nPoint.Y];
+            if (node.Owner == null)
             {
-                yield return cell;
+                return true;
             }
         }
+        node = null;
+        return false;
+    }
 
-        IEnumerator IEnumerable.GetEnumerator()
+    public IEnumerator<Node> GetEnumerator()
+    {
+        foreach (var cell in nodes)
         {
-            return GetEnumerator();
+            yield return cell;
         }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

@@ -1,53 +1,50 @@
-namespace RogueNET
+using System.Collections.Generic;
+
+public class Container : Door, ILootable
 {
-    using System.Collections.Generic;
+    List<Entity> contents;
 
-    public class Container : Door, ILootable
+    public Container()
     {
-        List<Entity> contents;
+        contents = new List<Entity>();
 
-        public Container()
+        SetSymbol('C');
+        SetName("Container");
+
+        stats = new Stats();
+        stats.SetWeight(50);
+    }
+
+    public virtual void SetContents(params Entity[] contents)
+    {
+        this.contents.AddRange(contents);
+    }
+
+    public void LootFor(Actor actor)
+    {
+        Log.Info($"{actor} tries to loot {this}");
+        if (openable.IsOpen)
         {
-            contents = new List<Entity>();
-
-            SetSymbol('C');
-            SetName("Container");
-
-            stats = new Stats();
-            stats.SetWeight(50);
-        }
-
-        public virtual void SetContents(params Entity[] contents)
-        {
-            this.contents.AddRange(contents);
-        }
-
-        public void LootFor(Actor actor)
-        {
-            Log.Info($"{actor} tries to loot {this}");
-            if (openable.IsOpen)
+            if (contents.Count == 0)
             {
-                if (contents.Count == 0)
-                {
-                    Log.Info($"{this} is empty!");
-                    return;
-                }
-
-                foreach (var content in contents)
-                {
-                    if (content is IPickupable)
-                    {
-                        var pickup = content as IPickupable;
-                        pickup.PickedUpBy(actor);
-                    }
-                }
-
-                contents.Clear();
+                Log.Info($"{this} is empty!");
+                return;
             }
-            else
+
+            foreach (var content in contents)
             {
-                Log.Info($"{this} is closed!");
+                if (content is IPickupable)
+                {
+                    var pickup = content as IPickupable;
+                    pickup.PickedUpBy(actor);
+                }
             }
+
+            contents.Clear();
+        }
+        else
+        {
+            Log.Info($"{this} is closed!");
         }
     }
 }

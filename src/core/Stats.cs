@@ -1,42 +1,39 @@
-namespace RogueNET
+using System;
+
+public class Stats
 {
-    using System;
+    double weightKilograms;
 
-    public class Stats
+    public double WeightKG => weightKilograms;
+
+    public Stats()
     {
-        double weightKilograms;
+        weightKilograms = Definitions.entityDefaultWeightKG;
+    }
 
-        public double WeightKG => weightKilograms;
+    public void SetWeight(double kilograms)
+    {
+        weightKilograms = kilograms;
+    }
 
-        public Stats()
+    public void SetWeightByBellCurve(double min, double max)
+    {
+        weightKilograms = RandomGaussian((float)min, (float)max);
+    }
+
+    public float RandomGaussian(float minValue = 0.0f, float maxValue = 1.0f)
+    {
+        float u, v, S;
+        do
         {
-            weightKilograms = Definitions.entityDefaultWeightKG;
+            u = 2.0f * (float)RogueNET.RNG.NextDouble() - 1.0f;
+            v = 2.0f * (float)RogueNET.RNG.NextDouble() - 1.0f;
+            S = u * u + v * v;
         }
-
-        public void SetWeight(double kilograms)
-        {
-            weightKilograms = kilograms;
-        }
-
-        public void SetWeightByBellCurve(double min, double max)
-        {
-            weightKilograms = RandomGaussian((float)min, (float)max);
-        }
-
-        public float RandomGaussian(float minValue = 0.0f, float maxValue = 1.0f)
-        {
-            float u, v, S;
-            do
-            {
-                u = 2.0f * (float)RogueNET.RNG.NextDouble() - 1.0f;
-                v = 2.0f * (float)RogueNET.RNG.NextDouble() - 1.0f;
-                S = u * u + v * v;
-            }
-            while (S >= 1.0f);
-            float std = u * (float)Math.Sqrt(-2.0f * (float)Math.Log(S) / S);
-            float mean = (minValue + maxValue) / 2.0f;
-            float sigma = (maxValue - mean) / 3.0f;
-            return Math.Clamp(std * sigma + mean, minValue, maxValue);
-        }
+        while (S >= 1.0f);
+        float std = u * (float)Math.Sqrt(-2.0f * (float)Math.Log(S) / S);
+        float mean = (minValue + maxValue) / 2.0f;
+        float sigma = (maxValue - mean) / 3.0f;
+        return Math.Clamp(std * sigma + mean, minValue, maxValue);
     }
 }

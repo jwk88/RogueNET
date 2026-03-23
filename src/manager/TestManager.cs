@@ -1,49 +1,46 @@
-namespace RogueNET
+using System;
+using System.Collections.Generic;
+
+public class TestManager
 {
-    using System;
-    using System.Collections.Generic;
+    Dictionary<string, Test> tests;
 
-    public class TestManager
+    public Dictionary<string,  Test> Tests => tests;
+
+    public TestManager()
     {
-        Dictionary<string, Test> tests;
+        RogueNET.RNG = new Random(1);
 
-        public Dictionary<string,  Test> Tests => tests;
-
-        public TestManager()
+        tests = new Dictionary<string, Test>
         {
-            RogueNET.RNG = new Random(1);
+            { "Test1", new Test1() },
+            { "Test1b", new Test1b() }
+        };
+    }
 
-            tests = new Dictionary<string, Test>
-            {
-                { "Test1", new Test1() },
-                { "Test1b", new Test1b() }
-            };
+    public void RunAllTests(bool initialize)
+    {
+        var testOutput = "";
+        foreach (var test in tests)
+        {
+            testOutput += RunTest(test.Value, initialize);
         }
 
-        public void RunAllTests(bool initialize)
-        {
-            var testOutput = "";
-            foreach (var test in tests)
-            {
-                testOutput += RunTest(test.Value, initialize);
-            }
+        Console.Clear();
+        Console.WriteLine(testOutput);
+        Console.WriteLine("Tests passed, press any key to continue");
+        Console.ReadKey();
+    }
 
-            Console.Clear();
-            Console.WriteLine(testOutput);
-            Console.WriteLine("Tests passed, press any key to continue");
-            Console.ReadKey();
+    public string RunTest(Test test, bool initialize = false)
+    {
+        if (!test.Run(saveOutput: initialize))
+        {
+            throw new Exception($"{test} FAILED!");
         }
-
-        public string RunTest(Test test, bool initialize = false)
+        else
         {
-            if (!test.Run(saveOutput: initialize))
-            {
-                throw new Exception($"{test} FAILED!");
-            }
-            else
-            {
-                return test.ToString() + " passed, OK" + "\n";
-            }
+            return test.ToString() + " passed, OK" + "\n";
         }
     }
 }

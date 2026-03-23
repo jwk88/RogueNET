@@ -1,132 +1,127 @@
-namespace RogueNET
+using System;
+
+public abstract class Entity : EntityBase
 {
-    using System;
+    protected Grid grid;
+    protected Point point;
+    protected Stats stats;
 
-    public abstract class Entity : EntityBase
+    Entity carry;
+    bool isPlaced;
+    Point direction;
+    protected Node Node => grid[point];
+    public Stats Stats => stats;
+    public Entity Carry => carry;
+    public Point Direction => direction;
+
+    public void SetStats(Stats stats)
     {
-        protected Grid grid;
-        protected Point point;
-        protected Stats stats;
-        protected Node Node => grid[point];
+        this.stats = stats;
+    }
 
-        Entity carry;
-        bool isPlaced;
-        Point direction;
-    
-        public Stats Stats => stats;
-        public Entity Carry => carry;
-        public Point Direction => direction;
-        public Point Point => point;
+    public virtual void SetGrid(Grid grid)
+    {
+        this.grid = grid;
+    }
 
-        public void SetStats(Stats stats)
+    public virtual void SetCarry(Entity entity)
+    {
+        carry = entity;
+    }
+
+    public void Step(Point direction)
+    {
+        SetPosition(Node.Point + direction);
+    }
+
+    public void StepUp(int count, Action onStep = null)
+    {
+        for (int i = 0; i < count; i++)
         {
-            this.stats = stats;
-        }
-
-        public virtual void SetGrid(Grid grid)
-        {
-            this.grid = grid;
-        }
-
-        public virtual void SetCarry(Entity entity)
-        {
-            carry = entity;
-        }
-
-        public void Step(Point direction)
-        {
-            SetPosition(Node.Point + direction);
-        }
-
-        public void StepUp(int count, Action onStep = null)
-        {
-            for (int i = 0; i < count; i++)
+            onStep?.Invoke();
+            if (!SetPosition(point.X, point.Y - 1))
             {
-                onStep?.Invoke();
-                if (!SetPosition(point.X, point.Y - 1))
-                {
-                    break;
-                }
+                break;
             }
         }
+    }
 
-        public void StepDown(int count, Action onStep = null)
+    public void StepDown(int count, Action onStep = null)
+    {
+        for (int i = 0; i < count; i++)
         {
-            for (int i = 0; i < count; i++)
+            onStep?.Invoke();
+            if (!SetPosition(point.X, point.Y + 1))
             {
-                onStep?.Invoke();
-                if (!SetPosition(point.X, point.Y + 1))
-                {
-                    break;
-                }
+                break;
             }
         }
+    }
 
-        public void StepRight(int count, Action onStep = null)
-        {
-            for (int i = 0; i < count; i++)
-            {   
-                onStep?.Invoke();
-                if (!SetPosition(point.X + 1, point.Y))
-                {
-                    break;
-                }
+    public void StepRight(int count, Action onStep = null)
+    {
+        for (int i = 0; i < count; i++)
+        {   
+            onStep?.Invoke();
+            if (!SetPosition(point.X + 1, point.Y))
+            {
+                break;
             }
         }
+    }
 
-        public void StepLeft(int count, Action onStep = null)
+    public void StepLeft(int count, Action onStep = null)
+    {
+        for (int i = 0; i < count; i++)
         {
-            for (int i = 0; i < count; i++)
+            onStep?.Invoke();
+            if (!SetPosition(point.X - 1, point.Y))
             {
-                onStep?.Invoke();
-                if (!SetPosition(point.X - 1, point.Y))
-                {
-                    break;
-                }
+                break;
             }
         }
+    }
 
-        public bool SetPosition(int x, int y, bool overwrite = false) => SetPosition(new Point(x, y), overwrite);
-        public bool SetPosition(Point point, bool overwrite = false)
+    public bool SetPosition(int x, int y, bool overwrite = false) => SetPosition(new Point(x, y), overwrite);
+    public bool SetPosition(Point point, bool overwrite = false)
+    {
+        var next = grid[point];
+
+        if (next.Occupied && !overwrite)
         {
-            var next = grid[point];
+            Log.Info($"{this} path was blocked by {next.Owner}");
+            return false;
+        }
 
-            if (next.Occupied && !overwrite)
-            {
-                Log.Info($"{this} path was blocked by {next.Owner}");
-                return false;
-            }
+        Point prevPoint = Point.Zero;
+        if (Node != null)
+        {
+            prevPoint = Node.Point;
+            Node.SetOwner(null);
+        }
 
-            Point prevPoint = Point.Zero;
-            if (Node != null)
-            {
-                prevPoint = Node.Point;
-                Node.SetOwner(null);
-            }
+        if (isPlaced)
+        {
+            Log.Info($"'{Name}' is moving from {this.point} to {point}");    
+        }
 
-            if (isPlaced)
-            {
-                Log.Info($"'{Name}' is moving from {this.point} to {point}");    
-            }
-
-            this.point = point;
-            direction = point - prevPoint;
-            Node.SetOwner(this);
-            isPlaced = true;
+        this.point = point;
+        direction = point - prevPoint;
+        Node.SetOwner(this);
+        isPlaced = true;
         
-            return true;
-        }
+        return true;
+    }
 
-        public override string ToString()
+    public override string ToString()
+    {
+        if (!isPlaced)
         {
-            if (!isPlaced)
-            {
-                return base.ToString() + " {-,-}";
-            }
-            else
-            {
-                return $"{base.ToString()} {point}";
-            }
+            return base.ToString() + " {-,-}";
+        }
+        else
+        {
+            return $"{base.ToString()} {point}";
         }
     }
 }

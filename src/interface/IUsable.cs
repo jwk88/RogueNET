@@ -1,7 +1,4 @@
-namespace RogueNET
+public interface IUsable : IOwnable
 {
-    public interface IUsable : IOwnable
-    {
-        public void Use(Actor user, Entity target);
-    }
+    public void Use(Actor user, Entity target);
 }

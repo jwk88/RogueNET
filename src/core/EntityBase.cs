@@ -1,40 +1,37 @@
-namespace RogueNET
+using System;
+
+public abstract class EntityBase
 {
-    using System;
+    Guid guid;
+    string name;
+    char symbol;
 
-    public abstract class EntityBase
+    public Guid Guid => guid;
+    public string Name => name;
+    public char Symbol => symbol;
+
+    public EntityBase()
     {
-        Guid guid;
-        string name;
-        char symbol;
-
-        public Guid Guid => guid;
-        public string Name => name;
-        public char Symbol => symbol;
-
-        public EntityBase()
-        {
-            guid = Guid.NewGuid();
-        }
+        guid = Guid.NewGuid();
+    }
     
-        ~EntityBase()
-        {
-            Log.Info($"{this} is being destroyed");
-        }
+    ~EntityBase()
+    {
+        Log.Info($"{this} is being destroyed");
+    }
 
-        public void SetName(string name)
-        {
-            this.name = name;
-        }
+    public void SetName(string name)
+    {
+        this.name = name;
+    }
 
-        public void SetSymbol(char symbol)
-        {
-            this.symbol = symbol;
-        }
+    public void SetSymbol(char symbol)
+    {
+        this.symbol = symbol;
+    }
 
-        public override string ToString()
-        {
-            return $"'{Name}'";
-        }
+    public override string ToString()
+    {
+        return $"'{Name}'";
     }
 }

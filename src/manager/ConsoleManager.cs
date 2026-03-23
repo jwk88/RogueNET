@@ -1,92 +1,89 @@
-namespace RogueNET
+using System;
+using System.Text;
+
+public class ConsoleManager
 {
-    using System;
-    using System.Text;
+    StringBuilder full;
 
-    public class ConsoleManager
+    public string Title { get; set; }
+
+    public ConsoleManager()
     {
-        StringBuilder full;
+        full = new StringBuilder();
+    }
 
-        public string Title { get; set; }
+    public string Draw(Grid grid)
+    {
+        Console.Clear();
+        var frame = new StringBuilder();
 
-        public ConsoleManager()
+        int depth = grid.Depth;
+        int width = grid.Width;
+
+        for (int y = 0; y < depth; y++)
         {
-            full = new StringBuilder();
-        }
+            char[] line = new char[width];
 
-        public string Draw(Grid grid)
-        {
-            Console.Clear();
-            var frame = new StringBuilder();
-
-            int depth = grid.Depth;
-            int width = grid.Width;
-
-            for (int y = 0; y < depth; y++)
+            for (int x = 0; x < width; x++)
             {
-                char[] line = new char[width];
-
-                for (int x = 0; x < width; x++)
+                char symbol = ' ';
+                var owner = grid[x, y].Owner;
+                if (owner != null)
                 {
-                    char symbol = ' ';
-                    var owner = grid[x, y].Owner;
-                    if (owner != null)
-                    {
-                        symbol = owner.Symbol;
-                    }
-
-                    line[x] = symbol;
+                    symbol = owner.Symbol;
                 }
 
-                frame.AppendLine(new string(line));
+                line[x] = symbol;
             }
 
-            frame.AppendLine();
-
-            while (Log.logs.Count > 0)
-            {
-                frame.AppendLine(Log.logs.Dequeue());
-            }
-
-            full.Append(frame.ToString());
-            Console.Write(frame.ToString());
-            Console.ReadKey();
-            return full.ToString();
+            frame.AppendLine(new string(line));
         }
 
-        public string GetASCIIOnly(Grid grid)
+        frame.AppendLine();
+
+        while (Log.logs.Count > 0)
         {
-            Console.Clear();
-            var frame = new StringBuilder();
+            frame.AppendLine(Log.logs.Dequeue());
+        }
 
-            int depth = grid.Depth;
-            int width = grid.Width;
+        full.Append(frame.ToString());
+        Console.Write(frame.ToString());
+        Console.ReadKey();
+        return full.ToString();
+    }
 
-            for (int y = 0; y < depth; y++)
+    public string GetASCIIOnly(Grid grid)
+    {
+        Console.Clear();
+        var frame = new StringBuilder();
+
+        int depth = grid.Depth;
+        int width = grid.Width;
+
+        for (int y = 0; y < depth; y++)
+        {
+            char[] line = new char[width];
+
+            for (int x = 0; x < width; x++)
             {
-                char[] line = new char[width];
-
-                for (int x = 0; x < width; x++)
+                char symbol = ' ';
+                var owner = grid[x, y].Owner;
+                if (owner != null)
                 {
-                    char symbol = ' ';
-                    var owner = grid[x, y].Owner;
-                    if (owner != null)
-                    {
-                        symbol = owner.Symbol;
-                    }
-
-                    line[x] = symbol;
+                    symbol = owner.Symbol;
                 }
 
-                frame.AppendLine(new string(line));
+                line[x] = symbol;
             }
 
-            return frame.ToString();
+            frame.AppendLine(new string(line));
         }
 
-        public string GetFullOutput()
-        {
-            return full.ToString();
-        }
+        return frame.ToString();
+    }
+
+    public string GetFullOutput()
+    {
+        return full.ToString();
     }
 }

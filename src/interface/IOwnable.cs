@@ -1,8 +1,5 @@
-namespace RogueNET
+public interface IOwnable
 {
-    public interface IOwnable
-    {
-        public void SetOwner(Entity entity);
-        public Entity Owner { get; }
-    }
+    public void SetOwner(Entity entity);
+    public Entity Owner { get; }
 }

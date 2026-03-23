@@ -1,13 +1,10 @@
-namespace RogueNET
+public class Roof : Entity
 {
-    public class Roof : Entity
+    public Roof()
     {
-        public Roof()
-        {
-            SetName("Roof");
+        SetName("Roof");
 
-            stats = new Stats();
-            stats.SetWeight(double.MaxValue);
-        }
+        stats = new Stats();
+        stats.SetWeight(double.MaxValue);
     }
 }
