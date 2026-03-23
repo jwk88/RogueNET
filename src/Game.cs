@@ -14,9 +14,9 @@ namespace RogueNET
         public Game(RuntimeConfig config)
         {
             this.config = config;
-            console = new ConsoleManager();
 
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+            console = new ConsoleManager();
             GenerateDungeon();
         
             Player = new EntityBuilder<Player>(Grid, Dungeon.GetActiveRooms[0].Origin).Build();
@@ -56,11 +56,6 @@ namespace RogueNET
                     Console.WriteLine(Log.logs.Dequeue());
                 }
             }
-        }
-
-        public string GetASCII()
-        {
-            return console.GetASCIIOnly(Grid);
         }
 
         public void GenerateDungeon()
